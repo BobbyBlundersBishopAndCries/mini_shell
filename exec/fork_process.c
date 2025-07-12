@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:31 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/10 12:00:45 by med              ###   ########.fr       */
+/*   Updated: 2025/07/12 13:02:04 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,30 +74,18 @@ static void	fork_and_execute(t_cmd *cmd, int prev_fd[2])
 void	execute_pipeline(t_cmd *cmd)
 {
 	int		prev_fd[2];
-	int		status;
 	t_cmd	*tmp;
-	int sig;
 
 	prev_fd[0] = -1;
 	prev_fd[1] = -1;
-	tmp = cmd;
 	if (handle_all_heredocs(cmd))
 		return ;
+	tmp = cmd;
 	while (tmp)
 	{
 		fork_and_execute(tmp, prev_fd);
 		tmp = tmp->next;
 	}
 	handle_signals();
-	while (wait(&status) > 0)
-	{
-		if (WIFEXITED(status))
-			g_shell.exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-		{	
-			sig = WTERMSIG(status);
-			if (sig == SIGINT)
-				write(1, "\n", 1);
-		}
-	}
+	wait_for_children();
 }

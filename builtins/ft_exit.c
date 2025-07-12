@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 03:35:36 by med               #+#    #+#             */
-/*   Updated: 2025/07/09 13:51:30 by med              ###   ########.fr       */
+/*   Updated: 2025/07/12 14:47:41 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	is_valid_number(const char *str)
+static int	is_digitstr(const char *str)
 {
 	int	i;
 
@@ -30,11 +30,57 @@ static int	is_valid_number(const char *str)
 	return (1);
 }
 
-static void	valid_error(char *arg)
+static int	last_digit_overflows(int digit, int sign)
 {
-	ft_printf(2, "exit\n");
-	ft_printf(2, "bash: exit: %s: numeric argument required\n", arg);
-	exit(2);
+	if (sign == 1 && digit > LONG_MAX % 10)
+		return (1);
+	if (sign == -1 && digit > -(LONG_MIN % 10))
+		return (1);
+	return (0);
+}
+
+static int	is_overflow(const char *str)
+{
+	unsigned long	result;
+	int				sign;
+	int				digit;
+
+	result = 0;
+	sign = 1;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		digit = *str - '0';
+		if (result > LONG_MAX / 10)
+			return (1);
+		if (result == LONG_MAX / 10 && last_digit_overflows(digit, sign))
+			return (1);
+		result = result * 10 + digit;
+		str++;
+	}
+	return (0);
+}
+
+static void	check_exit_argument(const char *str)
+{
+	int	is_valid;
+
+	is_valid = 1;
+	if (!is_digitstr(str))
+		is_valid = 0;
+	else if (is_overflow(str))
+		is_valid = 0;
+	if (!is_valid)
+	{
+		ft_printf(2, "exit\n");
+		ft_printf(2, "bash: exit: %s: numeric argument required\n", str);
+		exit(2);
+	}
 }
 
 int	ft_exit(t_cmd *cmd)
@@ -44,17 +90,18 @@ int	ft_exit(t_cmd *cmd)
 
 	count = arg_count(cmd->args);
 	exit_status = 0;
+	if (cmd->args[1])
+	{
+		check_exit_argument(cmd->args[1]);
+		exit_status = (unsigned char)ft_atoi(cmd->args[1]);
+	}
 	if (count > 2)
 	{
 		ft_printf(2, "exit\nbash: exit: too many arguments\n");
 		return (1);
 	}
-	if (cmd->args[1])
-	{
-		if (!is_valid_number(cmd->args[1]))
-			valid_error(cmd->args[1]);
-		exit_status = (unsigned char)ft_atoi(cmd->args[1]);
-	}
+	else if (count == 1)
+		exit(0);
 	else
 		exit_status = g_shell.exit_status;
 	exit(exit_status);

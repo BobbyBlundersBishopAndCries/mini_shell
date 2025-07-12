@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:29 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/09 18:52:29 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:33:52 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void	execute_command(t_cmd *cmd)
 	}
 	execve(p, cmd->args, cmd->envp);
 	ft_printf(2, "minishell: %s: %s\n", cmd->args[0], strerror(errno));
+	free(p);
 	exit(exec_error_status(errno));
 }

@@ -33,7 +33,8 @@ char	*get_value(t_env *env, char *key)
 
 	if (!env)
 	{
-		ft_printf(STDERR_FILENO, "no environement + we aren't supposed to handle this.\n");
+		ft_printf(STDERR_FILENO, "no environement +\
+		we aren't supposed to handle this.\n");
 		return (NULL);
 	}
 	if (!key)

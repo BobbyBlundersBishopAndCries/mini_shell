@@ -22,7 +22,6 @@ void	sigint_handler(int signo)
 {
 	(void)signo;
 	g_shell.exit_status = 130;
-
 	if (g_shell.in_heredoc)
 	{
 		write(1, "\n", 1);
@@ -47,4 +46,3 @@ void	restore_signals_to_default(void)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
-

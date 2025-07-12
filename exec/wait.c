@@ -1,44 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_list.c                                        :+:      :+:    :+:   */
+/*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 18:49:37 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/12 14:46:23 by mohabid          ###   ########.fr       */
+/*   Created: 2025/07/12 13:02:14 by mohabid           #+#    #+#             */
+/*   Updated: 2025/07/12 13:04:36 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_env_list(t_env *env)
+void	wait_for_children(void)
 {
-	t_env	*tmp;
+	int	status;
+	int	sig;
 
-	while (env)
+	while (wait(&status) > 0)
 	{
-		tmp = env->next;
-		free(env->key);
-		if (env->value)
-			free(env->value);
-		free(env);
-		env = tmp;
+		if (WIFEXITED(status))
+			g_shell.exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			sig = WTERMSIG(status);
+			if (sig == SIGINT)
+				write(1, "\n", 1);
+		}
 	}
-}
-
-int	is_valid_identifier(char *arg)
-{
-	int	i;
-
-	if (!arg || (!ft_isalpha(arg[0]) && arg[0] != '_'))
-		return (0);
-	i = 1;
-	while (arg[i] && arg[i] != '=')
-	{
-		if (!ft_isalnum(arg[i]) && arg[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
 }

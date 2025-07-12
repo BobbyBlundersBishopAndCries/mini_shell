@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_tochar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:49:29 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/09 18:49:29 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:31:05 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ char	**env_tochar(t_env *env)
 	{
 		ev[i] = strjoin_val_path(curr->key, curr->value, 2);
 		if (!ev[i])
+		{
 			free_array(ev);
+			return (NULL);
+		}
 		i++;
 		curr = curr->next;
 	}

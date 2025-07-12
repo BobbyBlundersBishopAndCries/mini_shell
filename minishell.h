@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/11 13:43:46 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:41:38 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@
 typedef struct s_shell_state
 {
 	int					exit_status;
-	int					sigint_received;
 	int					in_heredoc;
-	int 				child_running;
+	int					child_running;
 }						t_shell_state;
 extern t_shell_state	g_shell;
 
@@ -79,7 +78,7 @@ typedef struct s_redir
 {
 	char				*files;
 	t_redirct			index;
-	bool deja_quoted ;
+	bool				deja_quoted ;
 	int					fd;
 	struct s_redir		*next;
 }						t_redir;
@@ -118,8 +117,8 @@ typedef struct s_token
 {
 	char				*token;
 	t_type				type;
-	bool deja_quoted;
-	struct s_token *next;
+	bool				deja_quoted;
+	struct s_token		*next;
 }						t_token;
 
 typedef struct s_lst_token
@@ -272,6 +271,8 @@ int						handle_all_heredocs(t_cmd *cmd);
 int						handle_heredoc(t_redir *redir, t_env *env);
 void					close_redirs(t_redir *list);
 /* execute command */
+void					wait_for_children(void);
+int						handle_builtin_cmd(t_cmd *cmd);
 int						exec_error_status(int err);
 int						execute_builtin(t_cmd *cmd);
 void					error(void);

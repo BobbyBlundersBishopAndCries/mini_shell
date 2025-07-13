@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 12:58:17 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/12 12:58:21 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/13 14:49:24 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	apply_redirections(t_redir *redir_list, int *saved_stdout, int *saved_stdin)
 	{
 		current->fd = open_file(current, current->index);
 		if (current->fd < 0)
-			return (perror("open"), -1);
+			return (-1);
 		save_fds(current, saved_stdout, saved_stdin);
 		if (current->index == R_OUT || current->index == R_APPEND)
 		{

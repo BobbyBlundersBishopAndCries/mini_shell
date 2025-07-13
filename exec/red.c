@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   red.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:36 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/09 18:52:36 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/13 14:53:17 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	open_file(t_redir *redir, t_redirct mode)
 	else if (mode == R_HEREDOC)
 		fd = redir->fd;
 	if (fd < 0)
-		perror("open_file");
+		ft_printf(2, "minishell: %s: %s\n",redir->files,strerror(errno));
 	return (fd);
 }
 

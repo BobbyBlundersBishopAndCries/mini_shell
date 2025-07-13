@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:43 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/12 15:36:51 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:53:18 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,12 @@ static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 	{
 		write(1, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
+		if (ft_strncmp(line, redir->files,ft_strlen(redir->files)) == 0
+			&& line[ft_strlen(redir->files)] == '\n')
+		{
+			free(line);
+			break ;
+		}
 		if (line && !redir->deja_quoted)
 		{
 			char *expanded = expand_line(line, env);
@@ -120,12 +126,6 @@ static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 		{
 			ft_printf(2, "minishell: warning: here-document delimited at line %d "
 				"by end-of-file (wanted `%s')\n", count, redir->files);
-			break ;
-		}
-		if (ft_strncmp(line, redir->files, ft_strlen(redir->files)) == 0
-			&& line[ft_strlen(redir->files)] == '\n')
-		{
-			free(line);
 			break ;
 		}
 		write(pipe_fd[1], line, ft_strlen(line));

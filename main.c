@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/12 14:44:08 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/13 13:57:32 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,43 +51,58 @@ void	init_commands(t_lst_cmd *cmds, t_env *envir)
 	free_array(cmd->envp);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	setup_shell_state(void)
+{
+	handle_signals();
+	g_shell.child_running = 0;
+}
+
+void	exit_shell(void)
+{
+	write(1, "exit\n", 5);
+	exit(g_shell.exit_status);
+}
+
+void	shell_loop(t_env *envir)
 {
 	char		*input;
 	t_lst_cmd	*cmds;
-	t_env		*envir;
-
-	(void)argc;
-	(void)argv;
-	envir = get_env(envp);
+	
 	while (1)
 	{
-		handle_signals();
-		g_shell.child_running = 0;
+		setup_shell_state();
 		input = readline("minishell:$ ");
 		if (!input)
-		{
-			write(1, "exit\n", 5);
-			break ;
-		}
+			exit_shell();
 		if (!check_tabs_spaces(input))
 		{
 			free(input);
-			continue ;
+			continue;
 		}
 		if (*input)
-			add_history(input);
+		add_history(input);
 		cmds = parsing(input, envir, &g_shell.exit_status);
 		free(input);
-	if (!cmds || !cmds->head)
-	{
-    	if (cmds)
-    	    free_all(cmds->k);
-    	continue;
-	}
+		if (!cmds || !cmds->head)
+		{
+			if (cmds)
+			free_all(cmds->k);
+			continue;
+		}
 		init_commands(cmds, envir);
 		free_all(cmds->k);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_env *envir = get_env(envp);
+
+	(void)argc;
+	(void)argv;
+
+	shell_loop(envir);
+
 	free_env_list(envir);
 	return (g_shell.exit_status);
 }

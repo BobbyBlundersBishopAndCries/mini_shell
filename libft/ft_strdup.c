@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:39:58 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/06 18:28:27 by med              ###   ########.fr       */
+/*   Updated: 2025/07/13 14:06:47 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,3 @@ char	*ft_strdup(const char *s1)
 	result[i] = '\0';
 	return (result);
 }
-/*
-int main() {
-	//strdup(NULL);
- 	const char *original = NULL;
-    char *copy = ft_strdup(original);
-
-    if (copy) {
-        printf("Original: %s\n", original);
-        printf("Copy: %s\n", copy);
-        free(copy);
-    } else {
-        printf("Memory allocation failed.\n");
-    }
-    return 0;
-}*/

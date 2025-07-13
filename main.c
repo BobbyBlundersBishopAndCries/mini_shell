@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/13 13:57:32 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:58:39 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	shell_loop(t_env *envir)
 			continue;
 		}
 		if (*input)
-		add_history(input);
+			add_history(input);
 		cmds = parsing(input, envir, &g_shell.exit_status);
 		free(input);
 		if (!cmds || !cmds->head)

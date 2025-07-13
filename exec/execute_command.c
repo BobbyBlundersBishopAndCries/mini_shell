@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:29 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/12 14:33:52 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/13 14:19:48 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static char	**return_path(t_env *env)
 	if (!path_value)
 		return (NULL);
 	path = ft_split(path_value, ':');
+	free(path_value);
 	if (!path)
 		return (NULL);
 	return (path);

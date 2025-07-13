@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:54:21 by med               #+#    #+#             */
-/*   Updated: 2025/07/09 15:45:10 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:47:07 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ static void	export_argument(t_env **env, char *arg)
 	char	*val;
 	t_env	*existing;
 
-	if (!is_valid_identifier(arg))
-		return ((void)ft_printf(2,
-				"minishell: export: `%s`: not a valid identifier\n", arg));
+	if (!arg || !is_valid_identifier(arg))
+	{
+		ft_printf(2, "minishell: export: `%s`: not a valid identifier\n",
+			arg ? arg : "(null)");
+		return ;
+	}
 	eq = ft_strchr(arg, '=');
 	if (!eq)
 	{
@@ -38,6 +41,8 @@ static void	export_argument(t_env **env, char *arg)
 	}
 	key = ft_substr(arg, 0, eq - arg);
 	val = ft_strdup(eq + 1);
+	if (!key || !val)
+		return ;
 	existing = find_env_node(*env, key);
 	if (existing)
 		update_env_value(existing, val);
@@ -47,6 +52,20 @@ static void	export_argument(t_env **env, char *arg)
 	free(val);
 }
 
+static int	count_non_empty_args(char **args)
+{
+	int	i = 1;
+	int	count = 0;
+
+	while (args[i])
+	{
+		if (args[i][0] != '\0')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
 static void	export_with_args(t_cmd *cmd)
 {
 	int	i;
@@ -54,7 +73,8 @@ static void	export_with_args(t_cmd *cmd)
 	i = 1;
 	while (cmd->args[i])
 	{
-		export_argument(cmd->env, cmd->args[i]);
+		if (cmd->args[i][0] != '\0')
+			export_argument(cmd->env, cmd->args[i]);
 		i++;
 	}
 }
@@ -63,9 +83,9 @@ int	ft_export(t_cmd *cmd)
 {
 	t_env	*curr;
 
-	if (!cmd || !cmd->env || !(*cmd->env))
+	if (!cmd || !cmd->env)
 		return (1);
-	if (arg_count(cmd->args) == 1)
+	if (arg_count(cmd->args) == 1 || count_non_empty_args(cmd->args) == 0)
 	{
 		sort_list(*cmd->env);
 		curr = *cmd->env;

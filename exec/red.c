@@ -6,7 +6,7 @@
 /*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:36 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/13 14:53:17 by med              ###   ########.fr       */
+/*   Updated: 2025/07/13 15:16:15 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ int	open_file(t_redir *redir, t_redirct mode)
 	else if (mode == R_HEREDOC)
 		fd = redir->fd;
 	if (fd < 0)
-		ft_printf(2, "minishell: %s: %s\n",redir->files,strerror(errno));
+	{
+		if (ft_strcmp(redir->files, "") == 0)
+			ft_printf(2, "minishell: : ambiguous redirect \n");
+		else 
+			ft_printf(2, "minishell: %s: %s\n",redir->files,strerror(errno));
+	}
 	return (fd);
 }
 

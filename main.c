@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/13 13:58:39 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:20:24 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	shell_loop(t_env *envir)
 			continue;
 		}
 		init_commands(cmds, envir);
+		close_redirs(cmds->head->files);
 		free_all(cmds->k);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:43 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/14 13:37:51 by med              ###   ########.fr       */
+/*   Updated: 2025/07/14 14:59:11 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 		if (!line)
 		{
 			write(2, "minishell: warning: here-document delimited by EOF\n", 51);
-			fflush(stderr);
 			break ;
 		}
 		write(pipe_fd[1], line, ft_strlen(line));

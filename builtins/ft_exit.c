@@ -6,7 +6,7 @@
 /*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 03:35:36 by med               #+#    #+#             */
-/*   Updated: 2025/07/12 14:47:41 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/14 15:08:27 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	check_exit_argument(const char *str)
 	if (!is_valid)
 	{
 		ft_printf(2, "exit\n");
-		ft_printf(2, "bash: exit: %s: numeric argument required\n", str);
+		ft_printf(2, "minihell: exit: %s: numeric argument required\n", str);
 		exit(2);
 	}
 }
@@ -97,11 +97,9 @@ int	ft_exit(t_cmd *cmd)
 	}
 	if (count > 2)
 	{
-		ft_printf(2, "exit\nbash: exit: too many arguments\n");
+		ft_printf(2, "exit\nminishell: exit: too many arguments\n");
 		return (1);
 	}
-	else if (count == 1)
-		exit(0);
 	else
 		exit_status = g_shell.exit_status;
 	exit(exit_status);

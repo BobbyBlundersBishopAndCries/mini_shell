@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errno.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:49:32 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/14 13:14:39 by med              ###   ########.fr       */
+/*   Updated: 2025/07/14 14:52:35 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	handle_builtin_cmd(t_cmd *cmd)
 
 int	exec_error_status(int err)
 {
-	if (err == EACCES || err == EISDIR || err == ENOEXEC || err == ETXTBSY)
+	if (err == EACCES || err == ENOEXEC || err == ETXTBSY)
 		return (126);
 	if (err == ENOENT || err == ENOTDIR)
 		return (127);

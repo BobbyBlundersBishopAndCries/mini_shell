@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:31 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/14 14:43:55 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/14 18:12:29 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,33 @@ static void	child_process_execution(t_cmd *cmd, int prev_fd[2], int next_fd[2])
 
 static void	fork_and_execute(t_cmd *cmd, int prev_fd[2])
 {
-	int		next_fd[2];
+	int		next_fd[2] = {-1, -1};
 	pid_t	pid;
 
 	if (cmd->next && pipe(next_fd) == -1)
 		error();
+
+	g_shell.child_running = 1;
+
 	pid = fork();
 	if (pid < 0)
 		error();
+
 	if (pid == 0)
 		child_process_execution(cmd, prev_fd, next_fd);
+
+	// Parent process:
 	if (prev_fd[0] != -1)
-		close(prev_fd[0]);
+		close(prev_fd[0]); // close old read end
+
 	if (cmd->next)
 	{
-		prev_fd[0] = next_fd[0];
-		close(next_fd[1]);
+		prev_fd[0] = next_fd[0];  // keep new read end
+		close(next_fd[1]);        // close write end
 	}
 	else
 		prev_fd[0] = -1;
 }
-
 void	execute_pipeline(t_cmd *cmd)
 {
 	int		prev_fd[2];
@@ -80,6 +86,19 @@ void	execute_pipeline(t_cmd *cmd)
 	prev_fd[1] = -1;
 	if (handle_all_heredocs(cmd))
 		return ;
+	if (!cmd || !cmd->args || !cmd->args[0])
+	{
+		// Close any heredoc pipe read fds to prevent leaks
+		t_redir *r = cmd->files;
+		while (r)
+		{
+			if (r->index == R_HEREDOC && r->fd > 2)
+				close(r->fd);
+			r = r->next;
+		}
+		g_shell.exit_status = 0;
+		return;
+	}
 	tmp = cmd;
 	while (tmp)
 	{
@@ -88,4 +107,5 @@ void	execute_pipeline(t_cmd *cmd)
 	}
 	handle_signals();
 	wait_for_children();
+	g_shell.child_running = 0;
 }

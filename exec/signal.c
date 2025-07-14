@@ -6,7 +6,7 @@
 /*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:39 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/10 12:03:33 by med              ###   ########.fr       */
+/*   Updated: 2025/07/14 13:32:46 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,16 @@ void	handle_signals(void)
 void	restore_signals_to_default(void)
 {
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	disable_echoctl(void)
+{
+	struct termios term;
+
+	if (tcgetattr(STDIN_FILENO, &term) == 0)
+	{
+		term.c_lflag &= ~ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	}
 }

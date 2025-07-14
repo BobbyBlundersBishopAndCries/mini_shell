@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/12 13:41:38 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/14 13:26:18 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+#include <termios.h>
+#ifndef ECHOCTL
+#define ECHOCTL 0001000
+#endif
 # define READ_END 0
 # define WRITE_END 1
 
@@ -282,6 +286,7 @@ void					execute_pipeline(t_cmd *cmd);
 void					handle_signals(void);
 void					sigint_handler(int signo);
 void					restore_signals_to_default(void);
+void					disable_echoctl(void);
 // export utils
 
 #endif

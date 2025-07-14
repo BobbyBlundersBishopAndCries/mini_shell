@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:43 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/13 13:53:18 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:37:51 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 		}
 		if (!line)
 		{
-			ft_printf(2, "minishell: warning: here-document delimited at line %d "
-				"by end-of-file (wanted `%s')\n", count, redir->files);
+			write(2, "minishell: warning: here-document delimited by EOF\n", 51);
+			fflush(stderr);
 			break ;
 		}
 		write(pipe_fd[1], line, ft_strlen(line));
@@ -157,11 +157,15 @@ int	handle_heredoc(t_redir *redir, t_env *env)
 	waitpid(id, &status, 0);
 	g_shell.in_heredoc = 0;
 	handle_signals();
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	if (WIFSIGNALED(status))
 	{
-		redir->fd = -1;
-		g_shell.exit_status = 130;
-		return (1);
+		int sig = WTERMSIG(status);
+		if (sig == SIGINT || sig == SIGQUIT)
+		{
+			redir->fd = -1;
+			g_shell.exit_status = 128 + sig;
+			return (1);
+		}
 	}
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{

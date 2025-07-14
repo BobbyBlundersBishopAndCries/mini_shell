@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errno.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:49:32 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/09 18:49:52 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:14:39 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	handle_builtin_cmd(t_cmd *cmd)
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
 		return (ft_unset(cmd));
 	if (ft_strcmp(cmd->args[0], ":") == 0)
+		return (0);
+	if (ft_strcmp(cmd->args[0], "!") == 0)
 		return (0);
 	return (1);
 }

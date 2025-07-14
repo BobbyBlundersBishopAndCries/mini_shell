@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 03:35:36 by med               #+#    #+#             */
-/*   Updated: 2025/07/14 15:08:27 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/14 20:15:12 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int	ft_exit(t_cmd *cmd)
 	}
 	else
 		exit_status = g_shell.exit_status;
+	ft_printf(1 ,"exit\n");
 	exit(exit_status);
 }

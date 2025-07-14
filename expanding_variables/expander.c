@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:07:48 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/11 11:35:31 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:32:15 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env,
 		else
 			val = change_value(str + q->i, 1, x, env);
 		q->res = ft_join(q->res, val, x);
-		q->i++;
+		if(str[q->i] != '\'' || str[q->i] != '"')
+			q->i++;
 	}
 	else
 		q->res = ft_join(q->res, ft_strdump("$", x), x);
@@ -48,12 +49,40 @@ static void	constr(t_exstrct *q, t_lst_hk *x)
 	q->in_s = false;
 	q->res = ft_strdump("", x);
 }
+char *process_del(char *str , t_lst_hk *x)
+{
+	char *s;
+	s = NULL;
+	s = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), x);
+	int i = 0;
+	bool s_q;
+	bool d_q;
+	s_q = false;
+	d_q = false;
+	int j = 0;
+	while (str[i])
+	{
+		if(str[i] == '\'')
+			s_q = !s_q;
+		if(str[i] == '"')
+			d_q = !d_q ;
+		if(str[i] == '$' && (!d_q && !s_q) && (str[i+1] == '\'' || str[i+1] == '"'))
+			i++;
+		s[j] = str[i];
+		j++;
+		i++;
+	}
+	s[j] = '\0';
+	return s;
+}
 
 char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env, int g_es)
 {
 	t_exstrct	q;
 
 	constr(&q, x);
+	if(a == HEREDOC)
+		str = process_del(str,x );
 	while (str[q.i])
 	{
 		if (str[q.i] == '\'' && !q.in_d)
@@ -76,6 +105,7 @@ char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env, int g_es)
 	}
 	return (q.res);
 }
+
 void check_if_heredocquoted(t_lst_token *token)
 {
 	t_lst_token *tmp;
@@ -115,6 +145,7 @@ void check_if_heredocquoted(t_lst_token *token)
 		curr = curr->next;
 	}
 }
+
 void	expander(t_lst_token *token, t_lst_hk *x, t_env *env, int g_es)
 {
 	t_token	*curr;

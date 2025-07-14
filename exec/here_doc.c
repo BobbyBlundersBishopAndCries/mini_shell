@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:43 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/14 18:07:33 by med              ###   ########.fr       */
+/*   Updated: 2025/07/14 20:13:51 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,19 @@ char *expand_line(const char *line, t_env *env) {
 }
 
 static void write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2],
-                                     t_env *env) {
+                                     t_env *env)
+{
   char *line;
   int count;
 
   count = 1;
   close(pipe_fd[0]);
-  while (1) {
+  while (1)
+  {
     write(1, "> ", 2);
     line = get_next_line(STDIN_FILENO);
     if (!line) {
-      write(2, "minishell: warning: here-document delimited by EOF\n", 51);
+      write(2, "\nminishell: warning: here-document delimited by EOF\n", 52);
       break;
     }
     if (ft_strncmp(line, redir->files, ft_strlen(redir->files)) == 0 &&

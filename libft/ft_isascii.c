@@ -17,22 +17,22 @@ int	ft_isascii(int c)
 	return (c >= 0 && c <= 127);
 }
 /*
-int main()
+int	main(void)
 {
-       	char test_chars[] = {'a', 'Z', '1', '!', ' ', 'z', 'A', 128, -1};
-        int i = 0;
+		char test_chars[] = {'a', 'Z', '1', '!', ' ', 'z', 'A', 128, -1};
+		int i = 0;
    while (i < 9)
-    {
-        char c = test_chars[i];
-        if (ft_isascii(c))
-        {
-            printf("'%c' is an ascii character.\n", c);
-        }
-        else
-        {
-            printf("'%c' is NOT an ascii character.\n", c);
-        }
+	{
+		char c = test_chars[i];
+		if (ft_isascii(c))
+		{
+			printf("'%c' is an ascii character.\n", c);
+		}
+		else
+		{
+			printf("'%c' is NOT an ascii character.\n", c);
+		}
 	i++;
-    }
-   return 0;
+	}
+   return (0);
 }*/

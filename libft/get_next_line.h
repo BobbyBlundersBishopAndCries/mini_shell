@@ -17,11 +17,11 @@
 #  define BUFFER_SIZE 3
 # endif
 
+# include "libft.h"
 # include <fcntl.h>
+# include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stddef.h>
-# include "libft.h"
 
 size_t	ft_strlentwo(char *s);
 char	*ft_strchrtwo(char *s, int c);

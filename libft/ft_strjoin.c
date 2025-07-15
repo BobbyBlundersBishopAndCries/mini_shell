@@ -67,7 +67,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 // }
 
 /*
-int main()
+int	main(void)
 {
 	const char *s1 = "Hello ";
 	const char *s2 = "wol0d";
@@ -79,5 +79,5 @@ int main()
 	}
 	else
 		printf("Memory allocation failure.\n");
-	return 0;
+	return (0);
 }*/

@@ -25,15 +25,15 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 /*
-int main() {
-    char *str = NULL;
+int	main(void) {
+	char *str = NULL;
 
-    printf("Original string: \"%s\"\n", str);
+	printf("Original string: \"%s\"\n", str);
 
-    // Using ft_bzero to set the first 5 characters to '\0'
-    bzero(str + 5, 5);
+	// Using ft_bzero to set the first 5 characters to '\0'
+	bzero(str + 5, 5);
 
-    // Print the modified string
-    printf("Modified string: \"%s\"\n", str); 
-    return 0;
+	// Print the modified string
+	printf("Modified string: \"%s\"\n", str);
+	return (0);
 }*/

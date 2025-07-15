@@ -19,20 +19,20 @@ int	ft_isdigit(int c)
 /*int main()
 {
 	char test_chars[] = {'5', 'Z', '1', '!', 63, 'z', '4', 128, -1};
-        int i = 0;
+		int i = 0;
    while (i < 9)
-    {
-        char c = test_chars[i];
-        if (ft_isdigit(c))
-        {
-            printf("'%c' is a digit.\n", c);
-        }
-        else
-        {
-            printf("'%c' is NOT a digit.\n", c);
-        }
+	{
+		char c = test_chars[i];
+		if (ft_isdigit(c))
+		{
+			printf("'%c' is a digit.\n", c);
+		}
+		else
+		{
+			printf("'%c' is NOT a digit.\n", c);
+		}
 	i++;
-    }
-   return 0;
+	}
+   return (0);
 
 }*/

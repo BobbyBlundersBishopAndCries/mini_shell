@@ -38,5 +38,5 @@ char	*ft_strrchr(const char *s, int c)
 // 		printf("found %c at position : %zu\n",c,result - s);
 // 	else
 // 		printf("character not found\n");
-// 	return 0;
+// 	return (0);
 // }

@@ -19,10 +19,10 @@ int	ft_tolower(int c)
 	return (c);
 }
 /*
-int main() {
-    char c = 'G';
-    char lower = ft_tolower(c);
+int	main(void) {
+	char c = 'G';
+	char lower = ft_tolower(c);
 
-    printf("Original: %c, Lowercase: %c\n", c, lower);
-    return 0;
+	printf("Original: %c, Lowercase: %c\n", c, lower);
+	return (0);
 }*/

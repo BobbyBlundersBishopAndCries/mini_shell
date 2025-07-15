@@ -28,17 +28,17 @@ void	*ft_memchr(const void *s, int c, size_t n)
 }
 
 /*int main() {
-    const char *str = NULL;
-    char c = '\0';
+	const char *str = NULL;
+	char c = '\0';
 
-    void *result = ft_memchr(str, '\t', 0);
+	void *result = ft_memchr(str, '\t', 0);
 
-    if (result) {
-        printf("Found '%c' at position: %zu\n", c,\
-       	(unsigned char *)result - (unsigned char *)str);
-    } else {
-        printf("Character '%c' not found.\n", c);
-    }
+	if (result) {
+		printf("Found '%c' at position: %zu\n", c,\
+		(unsigned char *)result - (unsigned char *)str);
+	} else {
+		printf("Character '%c' not found.\n", c);
+	}
 
-    return 0;
+	return (0);
 }*/

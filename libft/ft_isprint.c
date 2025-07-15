@@ -17,20 +17,20 @@ int	ft_isprint(int c)
 }
 /*int main()
 {
-       	char test_chars[] = {'a', 'Z', '1', 14, ' ', 'z', 'A', 128, -1};
-        int i = 0;
+		char test_chars[] = {'a', 'Z', '1', 14, ' ', 'z', 'A', 128, -1};
+		int i = 0;
    while (i < 9)
-    {
-        char c = test_chars[i];
-        if (ft_isprint(c))
-        {
-            printf("'%c' is a printable.\n", c);
-        }
-        else
-        {
-            printf("'%c' is NOT a printable.\n", c);
-        }
+	{
+		char c = test_chars[i];
+		if (ft_isprint(c))
+		{
+			printf("'%c' is a printable.\n", c);
+		}
+		else
+		{
+			printf("'%c' is NOT a printable.\n", c);
+		}
 	i++;
-    }
-   return 0;
+	}
+   return (0);
 }*/

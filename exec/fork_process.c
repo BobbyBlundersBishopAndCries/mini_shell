@@ -55,24 +55,19 @@ static void	fork_and_execute(t_cmd *cmd, int prev_fd[2])
 
 	if (cmd->next && pipe(next_fd) == -1)
 		error();
-
 	g_shell.child_running = 1;
-
 	pid = fork();
 	if (pid < 0)
 		error();
-
 	if (pid == 0)
 		child_process_execution(cmd, prev_fd, next_fd);
-
 	// Parent process:
 	if (prev_fd[0] != -1)
 		close(prev_fd[0]); // close old read end
-
 	if (cmd->next)
 	{
-		prev_fd[0] = next_fd[0];  // keep new read end
-		close(next_fd[1]);        // close write end
+		prev_fd[0] = next_fd[0]; // keep new read end
+		close(next_fd[1]);       // close write end
 	}
 	else
 		prev_fd[0] = -1;
@@ -81,6 +76,7 @@ void	execute_pipeline(t_cmd *cmd)
 {
 	int		prev_fd[2];
 	t_cmd	*tmp;
+	t_redir	*r;
 
 	prev_fd[0] = -1;
 	prev_fd[1] = -1;
@@ -89,7 +85,7 @@ void	execute_pipeline(t_cmd *cmd)
 	if (!cmd || !cmd->args || !cmd->args[0])
 	{
 		// Close any heredoc pipe read fds to prevent leaks
-		t_redir *r = cmd->files;
+		r = cmd->files;
 		while (r)
 		{
 			if (r->index == R_HEREDOC && r->fd > 2)
@@ -97,7 +93,7 @@ void	execute_pipeline(t_cmd *cmd)
 			r = r->next;
 		}
 		g_shell.exit_status = 0;
-		return;
+		return ;
 	}
 	tmp = cmd;
 	while (tmp)

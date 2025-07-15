@@ -49,7 +49,7 @@ void	restore_signals_to_default(void)
 
 void	disable_echoctl(void)
 {
-	struct termios term;
+	struct termios	term;
 
 	if (tcgetattr(STDIN_FILENO, &term) == 0)
 	{

@@ -37,12 +37,12 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 }
 
 /*int main() {
-    char dest[20] = "wekweqjhewqre";
-    const char *src = " World!";
-    size_t result = strlcat(NULL,"s", 2);
+	char dest[20] = "wekweqjhewqre";
+	const char *src = " World!";
+	size_t result = strlcat(NULL,"s", 2);
 
    printf("Resulting String: \"%s\"\n", dest);
-    printf("Total Length: %zu\n", result);
+	printf("Total Length: %zu\n", result);
 
-    return 0;
+	return (0);
 }*/

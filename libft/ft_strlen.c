@@ -20,11 +20,11 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
-/*int main() 
+/*int main()
 {
-    char *str= NULL;
-    size_t length = ft_strlen(str);
-    printf("The length of the string \"%s\" is %zu.\n", str, length);
+	char *str= NULL;
+	size_t length = ft_strlen(str);
+	printf("The length of the string \"%s\" is %zu.\n", str, length);
 
-    return 0;
+	return (0);
 }*/

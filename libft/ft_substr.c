@@ -38,17 +38,17 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 /*int main() {
-    const char *str = NULL;
-    unsigned int start = 7;
-    size_t len = 4;
+	const char *str = NULL;
+	unsigned int start = 7;
+	size_t len = 4;
 
-    char *result = ft_substr(str, start, len);
+	char *result = ft_substr(str, start, len);
 
-    if (result) {
-        printf("Substring: %s\n", result);
-        free(result);
-    } else {
-        printf("Memory allocation failed.\n");
-    }
-    return 0;
+	if (result) {
+		printf("Substring: %s\n", result);
+		free(result);
+	} else {
+		printf("Memory allocation failed.\n");
+	}
+	return (0);
 }*/

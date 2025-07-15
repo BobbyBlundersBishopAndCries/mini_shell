@@ -31,8 +31,8 @@ int	open_file(t_redir *redir, t_redirct mode)
 	{
 		if (ft_strcmp(redir->files, "") == 0)
 			ft_printf(2, "minishell: : ambiguous redirect \n");
-		else 
-			ft_printf(2, "minishell: %s: %s\n",redir->files,strerror(errno));
+		else
+			ft_printf(2, "minishell: %s: %s\n", redir->files, strerror(errno));
 	}
 	return (fd);
 }

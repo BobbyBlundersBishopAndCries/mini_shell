@@ -102,6 +102,6 @@ int	ft_exit(t_cmd *cmd)
 	}
 	else
 		exit_status = g_shell.exit_status;
-	ft_printf(1 ,"exit\n");
+	ft_printf(1, "exit\n");
 	exit(exit_status);
 }

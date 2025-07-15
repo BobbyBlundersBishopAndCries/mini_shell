@@ -14,27 +14,30 @@
 
 int	ft_isalnum(int c)
 {
-	return ((c <= '9' && c >= '0') || ((c >= 'A' && c <= 'Z') \
-			|| (c >= 'a' && c <= 'z')));
+	return ((c <= '9' && c >= '0') || ((c >= 'A' && c <= 'Z') || (c >= 'a'
+				&& c <= 'z')));
 }
 /*
-int main()
+int	main(void)
 {
-       	char test_chars[] = {'a', 'Z', '1', '!', ' ', 'z', 'A', 128, -1};
-        int i = 0;
+		char test_chars[] = {'a', 'Z', '1', '!', ' ', 'z', 'A', 128, -1};
+	int		i;
+	char	c;
+
+		i = 0;
    while (i < 9)
-    {
-        char c = test_chars[i];
-        if (ft_isalnum(c))
-        {
-            printf("'%c' is an alphabet or a digit.\n", c);
-        }
-        else
-        {
-            printf("'%c' is NOT an alphabet nor a digit.\n", c);
-        }
+	{
+		c = test_chars[i];
+		if (ft_isalnum(c))
+		{
+			printf("'%c' is an alphabet or a digit.\n", c);
+		}
+		else
+		{
+			printf("'%c' is NOT an alphabet nor a digit.\n", c);
+		}
 	i++;
-    }
-   return 0;
+	}
+   return (0);
 }
 */

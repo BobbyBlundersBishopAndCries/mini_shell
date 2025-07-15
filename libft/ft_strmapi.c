@@ -31,22 +31,22 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	return (result);
 }
 /*
-static char example_function(unsigned int index, char c) {
+static char	example_function(unsigned int index, char c) {
 	index = 10;
-	return c + 1;
+	return (c + 1);
 }
 
-int main() {
-    const char *str = "hello";
+int	main(void) {
+	const char *str = "hello";
 
-    char *result = ft_strmapi(str, example_function);
+	char *result = ft_strmapi(str, example_function);
 
-    if (result) {
-        printf("Original: %s\n", str);
-        printf("Transformed: %s\n", result);
-        free(result);
-    } else {
-        printf("Error in processing.\n");
-    }
-    return 0;
+	if (result) {
+		printf("Original: %s\n", str);
+		printf("Transformed: %s\n", result);
+		free(result);
+	} else {
+		printf("Error in processing.\n");
+	}
+	return (0);
 }*/

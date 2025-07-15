@@ -29,9 +29,9 @@ void	ft_putnbr_fd(int n, int fd)
 	ft_putchar_fd(n % 10 + '0', fd);
 }
 /*
-int main()
+int	main(void)
 {
 	int n = 78785556;
 	ft_putnbr_fd(n,1);
-	return 0;
+	return (0);
 }*/

@@ -22,8 +22,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 		return ;
 	while (current != NULL)
 	{
-		address_holder = current -> next;
-		del(current -> content);
+		address_holder = current->next;
+		del(current->content);
 		free(current);
 		current = address_holder;
 	}

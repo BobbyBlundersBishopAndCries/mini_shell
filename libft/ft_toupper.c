@@ -19,10 +19,10 @@ int	ft_toupper(int c)
 	return (c);
 }
 /*
-int main() {
-    char c = 'j';
-    char upper = ft_toupper(c);
+int	main(void) {
+	char c = 'j';
+	char upper = ft_toupper(c);
 
-    printf("Original: %c, Uppercase: %c\n", c, upper);
-    return 0;
+	printf("Original: %c, Uppercase: %c\n", c, upper);
+	return (0);
 }*/

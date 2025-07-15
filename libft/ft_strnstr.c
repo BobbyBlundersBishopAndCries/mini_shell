@@ -32,7 +32,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	return (NULL);
 }
 /*
-int main()
+int	main(void)
 {
 	const char *big = "this is the way by the way.";
 	const char *little = "the way";

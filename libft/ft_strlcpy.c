@@ -31,14 +31,14 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (i);
 }
 /*
-int main() {
-    char dest[10];
-    const char *src ="abc";
-    
-    size_t result = ft_strlcpy(dest, src, 0);
-    
-    printf("Copied String: \"%s\"\n", dest);
-    printf("Length of Source: %zu\n", result);
+int	main(void) {
+	char dest[10];
+	const char *src ="abc";
 
-    return 0;
+	size_t result = ft_strlcpy(dest, src, 0);
+
+	printf("Copied String: \"%s\"\n", dest);
+	printf("Length of Source: %zu\n", result);
+
+	return (0);
 }*/

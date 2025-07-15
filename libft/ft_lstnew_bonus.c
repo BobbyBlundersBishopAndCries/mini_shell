@@ -19,17 +19,17 @@ t_list	*ft_lstnew(void *content)
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
 		return (NULL);
-	new -> content = content;
-	new -> next = NULL;
+	new->content = content;
+	new->next = NULL;
 	return (new);
 }
 /*int main()
 {
-    int *value = (int *)malloc(sizeof(int));
-    *value = 42;
-    t_list *node = ft_lstnew(value);
-    printf("Node content: %d\n",*(int *)(node->content));
-    free(node);
+	int *value = (int *)malloc(sizeof(int));
+	*value = 42;
+	t_list *node = ft_lstnew(value);
+	printf("Node content: %d\n",*(int *)(node->content));
+	free(node);
 
-    return 0;
+	return (0);
 }*/

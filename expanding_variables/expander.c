@@ -35,7 +35,7 @@ static void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env,
 		else
 			val = change_value(str + q->i, 1, x, env);
 		q->res = ft_join(q->res, val, x);
-		if(str[q->i] != '\'' || str[q->i] != '"')
+		if (str[q->i] != '\'' || str[q->i] != '"')
 			q->i++;
 	}
 	else
@@ -49,31 +49,35 @@ static void	constr(t_exstrct *q, t_lst_hk *x)
 	q->in_s = false;
 	q->res = ft_strdump("", x);
 }
-char *process_del(char *str , t_lst_hk *x)
+char	*process_del(char *str, t_lst_hk *x)
 {
-	char *s;
+	char	*s;
+	int		i;
+	bool	s_q;
+	bool	d_q;
+	int		j;
+
 	s = NULL;
 	s = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), x);
-	int i = 0;
-	bool s_q;
-	bool d_q;
+	i = 0;
 	s_q = false;
 	d_q = false;
-	int j = 0;
+	j = 0;
 	while (str[i])
 	{
-		if(str[i] == '\'')
+		if (str[i] == '\'')
 			s_q = !s_q;
-		if(str[i] == '"')
-			d_q = !d_q ;
-		if(str[i] == '$' && (!d_q && !s_q) && (str[i+1] == '\'' || str[i+1] == '"'))
+		if (str[i] == '"')
+			d_q = !d_q;
+		if (str[i] == '$' && (!d_q && !s_q) && (str[i + 1] == '\'' || str[i
+				+ 1] == '"'))
 			i++;
 		s[j] = str[i];
 		j++;
 		i++;
 	}
 	s[j] = '\0';
-	return s;
+	return (s);
 }
 
 char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env, int g_es)
@@ -81,8 +85,8 @@ char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env, int g_es)
 	t_exstrct	q;
 
 	constr(&q, x);
-	if(a == HEREDOC)
-		str = process_del(str,x );
+	if (a == HEREDOC)
+		str = process_del(str, x);
 	while (str[q.i])
 	{
 		if (str[q.i] == '\'' && !q.in_d)
@@ -106,12 +110,14 @@ char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env, int g_es)
 	return (q.res);
 }
 
-void check_if_heredocquoted(t_lst_token *token)
+void	check_if_heredocquoted(t_lst_token *token)
 {
-	t_lst_token *tmp;
-	t_token *m;
-	t_token *curr;
-	t_token *prev;
+	t_lst_token	*tmp;
+	t_token		*m;
+	t_token		*curr;
+	t_token		*prev;
+	char		*t;
+	int			size;
 
 	curr = NULL;
 	prev = NULL;
@@ -120,7 +126,7 @@ void check_if_heredocquoted(t_lst_token *token)
 	prev = curr;
 	curr = curr->next;
 	m = tmp->head;
-	while(m)
+	while (m)
 	{
 		m->deja_quoted = false;
 		m = m->next;
@@ -129,14 +135,14 @@ void check_if_heredocquoted(t_lst_token *token)
 	{
 		if (is_redir(prev))
 		{
-			char *t = curr->token;
-			int size = 0;
-			while(t[size])
+			t = curr->token;
+			size = 0;
+			while (t[size])
 			{
-				if(t[size] == '\'' || t[size] == '"')
+				if (t[size] == '\'' || t[size] == '"')
 				{
 					curr->deja_quoted = true;
-					break;
+					break ;
 				}
 				size++;
 			}

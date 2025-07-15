@@ -22,13 +22,13 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	if (*lst == NULL)
 	{
 		*lst = new;
-		new -> next = NULL;
+		new->next = NULL;
 	}
 	else
 	{
-		while (current -> next != NULL)
-			current = current -> next;
-		current -> next = new;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new;
 	}
 }
 
@@ -36,20 +36,20 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 		int i = 1;
 		t_list *lst2 = NULL;
-        t_list *lst = NULL;
-        ft_lstadd_back(&lst, ft_lstnew((void *)1));
-        ft_lstadd_back(&lst,ft_lstnew((void *)2));
-        ft_lstadd_back(&lst2, ft_lstnew((void *)3));
-        ft_lstadd_back(&lst2,ft_lstnew((void *)4));	
-        ft_lstadd_back(&lst,lst2);
-        t_list *current;
-        current = lst;
-        while(current != NULL)
-        {
-           printf("node added %d content %d\n",i,(int)(current -> content));
-           current = current -> next;
-		   i++;
-        }
-        free(lst);
-        return(0);
+		t_list *lst = NULL;
+		ft_lstadd_back(&lst, ft_lstnew((void *)1));
+		ft_lstadd_back(&lst,ft_lstnew((void *)2));
+		ft_lstadd_back(&lst2, ft_lstnew((void *)3));
+		ft_lstadd_back(&lst2,ft_lstnew((void *)4));
+		ft_lstadd_back(&lst,lst2);
+		t_list *current;
+		current = lst;
+		while(current != NULL)
+		{
+			printf("node added %d content %d\n",i,(int)(current -> content));
+			current = current -> next;
+			i++;
+		}
+		free(lst);
+		return(0);
 }*/

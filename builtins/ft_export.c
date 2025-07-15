@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:54:21 by med               #+#    #+#             */
-/*   Updated: 2025/07/14 20:10:51 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:06:15 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ static void	export_argument(t_env **env, char *arg)
 
 	if (!arg || !is_valid_identifier(arg))
 	{
-		ft_printf(2, "minishell: export: `%s`: not a valid identifier\n",
-			arg ? arg : "(null)");
+		ft_printf(2, "minishell: export: `%s`: not a valid identifier\n", arg);
 		return ;
 	}
 	eq = ft_strchr(arg, '=');
@@ -54,9 +53,11 @@ static void	export_argument(t_env **env, char *arg)
 
 static int	count_non_empty_args(char **args)
 {
-	int	i = 1;
-	int	count = 0;
+	int	i;
+	int	count;
 
+	i = 1;
+	count = 0;
 	while (args[i])
 	{
 		if (args[i][0] != '\0')

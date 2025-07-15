@@ -22,5 +22,5 @@ void	ft_putendl_fd(char *s, int fd)
 // {
 //         char *s = "hello";
 //         ft_putendl_fd(s,-1);
-//         return 0;
+//         return (0);
 // }

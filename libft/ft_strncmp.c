@@ -28,5 +28,5 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	const char *s2 = "test\0";
 	int n = ft_strncmp(s1,s2,6);
 	printf("%d\n",n);
-	return 0;
+	return (0);
 }*/

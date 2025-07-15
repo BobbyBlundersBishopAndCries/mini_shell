@@ -25,15 +25,15 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 	}
 }
 /*
-void funfunction(unsigned int a, char *s)
+void	funfunction(unsigned int a, char *s)
 {
 	*s = *s + 1;
 	(void)a;
 }
-int main()
+int	main(void)
 {
 	char *str = NULL;
 	ft_striteri(str ,funfunction);
 	printf("Output = %s\n",str);
-	return 0;
+	return (0);
 }*/

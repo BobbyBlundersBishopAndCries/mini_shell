@@ -28,17 +28,17 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 /*
-int main() {
-    const char *str = NULL;
-    char c = '\0';
+int	main(void) {
+	const char *str = NULL;
+	char c = '\0';
 
-    char *result = strchr(str, c);
+	char *result = strchr(str, c);
 
-    if (result) {
-        printf("Found '%c' at position: %zu\n", c, result - str);
-    } else {
-        printf("Character '%c' not found.\n", c);
-    }
+	if (result) {
+		printf("Found '%c' at position: %zu\n", c, result - str);
+	} else {
+		printf("Character '%c' not found.\n", c);
+	}
 
-    return 0;
+	return (0);
 }*/

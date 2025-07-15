@@ -33,7 +33,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 			return (NULL);
 		}
 		ft_lstadd_back(&result, new_node);
-		lst = lst -> next;
+		lst = lst->next;
 	}
 	return (result);
 }

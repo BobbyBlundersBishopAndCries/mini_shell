@@ -14,11 +14,11 @@
 
 static int	save_fds(t_redir *redir, int *saved_stdout, int *saved_stdin)
 {
-	if ((redir->index == R_OUT || redir->index == R_APPEND)
-		&& *saved_stdout == -1)
+	if ((redir->index == R_OUT || redir->index == R_APPEND) && *saved_stdout ==
+		-1)
 		*saved_stdout = dup(STDOUT_FILENO);
-	if ((redir->index == R_IN || redir->index == R_HEREDOC)
-		&& *saved_stdin == -1)
+	if ((redir->index == R_IN || redir->index == R_HEREDOC) && *saved_stdin ==
+		-1)
 		*saved_stdin = dup(STDIN_FILENO);
 	return (0);
 }

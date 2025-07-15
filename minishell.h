@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/15 20:22:49 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/15 22:15:43 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,7 @@ void					handle_signals(void);
 void					sigint_handler(int signo);
 void					restore_signals_to_default(void);
 void					disable_echoctl(void);
+// here doc expandering 
 // export utils
-
+char	*expand_line(const char *line, t_env *env);
 #endif

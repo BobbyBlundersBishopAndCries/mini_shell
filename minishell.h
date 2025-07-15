@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/14 13:26:18 by med              ###   ########.fr       */
+/*   Updated: 2025/07/15 20:22:49 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,8 @@ typedef struct s_exstrct
 	char				tmp[2];
 }						t_exstrct;
 
-char					*string_expander(char *str, t_lst_hk *x, t_type a,
-							t_env *env, int g_es);
-void					expander(t_lst_token *token, t_lst_hk *x, t_env *env,
-							int g_es);
+char					*string_expander(char *str, t_lst_hk *x, t_type a,t_env *env);
+void					expander(t_lst_token *token, t_lst_hk *x, t_env *env);
 char					*ft_strdump(const char *s1, t_lst_hk *x);
 char					*ft_join(const char *s1, const char *s2, t_lst_hk *x);
 char					*change_value(char *key, size_t count, t_lst_hk *x,

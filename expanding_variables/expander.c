@@ -3,17 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:07:48 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/14 20:32:15 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/15 20:29:33 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env,
-		int g_es)
+static size_t	ft_number_size(int number)
+{
+	size_t	length;
+
+	length = 0;
+	if (number == 0)
+		return (1);
+	if (number < 0)
+		length += 1;
+	while (number != 0)
+	{
+		number /= 10;
+		length++;
+	}
+	return (length);
+}
+
+char	*ft_ittoa(int n, t_lst_hk *x)
+{
+	char	*string;
+	size_t	length;
+
+	length = ft_number_size(n);
+	if (n == -2147483648)
+		return (ft_strdump("-2147483648", x));
+	string = (char *)ft_malloc(sizeof(char) * length + 1, x);
+	if (string == NULL)
+		return (NULL);
+	if (n < 0)
+	{
+		string[0] = '-';
+		n = -n;
+	}
+	if (n == 0)
+		string[0] = '0';
+	string[length] = '\0';
+	while (n != 0)
+	{
+		string[length - 1] = (n % 10) + '0';
+		n = n / 10;
+		length--;
+	}
+	return (string);
+}
+
+static void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 {
 	char	*val;
 	size_t	var_len;
@@ -31,7 +75,7 @@ static void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env,
 	else if (str[q->i] && !q->in_d)
 	{
 		if (str[q->i] == '?')
-			val = ft_itoa(g_es);
+			val = ft_ittoa(g_shell.exit_status, x);
 		else
 			val = change_value(str + q->i, 1, x, env);
 		q->res = ft_join(q->res, val, x);
@@ -49,6 +93,7 @@ static void	constr(t_exstrct *q, t_lst_hk *x)
 	q->in_s = false;
 	q->res = ft_strdump("", x);
 }
+
 char	*process_del(char *str, t_lst_hk *x)
 {
 	char	*s;
@@ -80,7 +125,7 @@ char	*process_del(char *str, t_lst_hk *x)
 	return (s);
 }
 
-char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env, int g_es)
+char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env)
 {
 	t_exstrct	q;
 
@@ -96,7 +141,7 @@ char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env, int g_es)
 		else if (str[q.i] == '$' && !q.in_s && a != HEREDOC)
 		{
 			q.i++;
-			handle_dollar(str, &q, x, env, g_es);
+			handle_dollar(str, &q, x, env);
 			continue ;
 		}
 		else
@@ -152,7 +197,7 @@ void	check_if_heredocquoted(t_lst_token *token)
 	}
 }
 
-void	expander(t_lst_token *token, t_lst_hk *x, t_env *env, int g_es)
+void	expander(t_lst_token *token, t_lst_hk *x, t_env *env)
 {
 	t_token	*curr;
 	t_token	*prev;
@@ -166,9 +211,9 @@ void	expander(t_lst_token *token, t_lst_hk *x, t_env *env, int g_es)
 	{
 		raw = curr->token;
 		if (prev == NULL)
-			curr->token = string_expander(raw, x, 0, env, g_es);
+			curr->token = string_expander(raw, x, 0, env);
 		else
-			curr->token = string_expander(raw, x, prev->type, env, g_es);
+			curr->token = string_expander(raw, x, prev->type, env);
 		prev = curr;
 		curr = curr->next;
 	}

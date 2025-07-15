@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:43 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/15 17:33:32 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/15 20:14:41 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,90 @@ static char	*get_word(const char *word, int size)
 	w[size] = '\0';
 	return (w);
 }
-static char *nor_word(const char *line , int i, char *result )
-{
-  int start;
-  start = i;
-  char *chunk;
 
-  chunk = NULL;
-  while (line[i] && line[i] != '$')
-    i++;
-  chunk = get_word(line + start, i - start);
-  result = str_append(result, chunk);
-  free(chunk);
-  return result;
+static char	*nor_word(const char *line, int i, char *result)
+{
+	int		start;
+	char	*chunk;
+
+	start = i;
+	chunk = NULL;
+	while (line[i] && line[i] != '$')
+		i++;
+	chunk = get_word(line + start, i - start);
+	result = str_append(result, chunk);
+	free(chunk);
+	return (result);
+}
+
+static char	*expand_exit_status(char *result)
+{
+	char	*exit_status_str;
+	char	*tmp;
+
+	exit_status_str = ft_itoa(g_shell.exit_status);
+	tmp = str_append(result, exit_status_str);
+	free(exit_status_str);
+	return (tmp);
+}
+static char *change_hvalue(char *key , t_env *env)
+{
+	t_env *en;
+	char *value;
+
+	en = env;
+	value = NULL;
+	while(en)
+	{
+		if(ft_strcmp(key , en->key) == 0)
+		{
+			value = en->value;
+			break;
+		}
+		en = en->next;
+	}
+	return value;
+}
+
+static char	*expand_variable(const char *line, int *i, t_env *env, char *result)
+{
+	int		keylen;
+	char	*varname;
+	char	*value;
+
+	keylen = 0;
+	value = NULL;
+	while (ft_isalnum(line[*i + keylen]) || line[*i + keylen] == '_')
+		keylen++;
+	varname = get_word(line + *i, keylen);
+	value = change_hvalue(varname, env);
+	if (value)
+		result = str_append(result, value);
+	else
+		result = str_append(result, "");
+	free(varname);
+	*i += keylen;
+	return (result);
+}
+
+char *helper_ex(const char *line , int *i , t_env *env , char *result)
+{
+	int inc;
+	inc = *i;
+	if(line[inc] == '\0')
+		return str_append(result, "$");
+	if(line[inc] == '?')
+		return *i = ++inc , expand_exit_status(result);
+	else if(ft_isalnum(line[inc]) || line[inc] == '_')
+		return expand_variable(line, i, env, result);
+	else
+		return str_append(result, "$");
 }
 
 char	*expand_line(const char *line, t_env *env)
 {
 	char	*result;
 	int		i;
-	char	*exit_status_str;
-	int		keylen;
-	char	*varname;
-	char	*value;
 
 	result = NULL;
 	i = 0;
@@ -76,46 +137,17 @@ char	*expand_line(const char *line, t_env *env)
 		if (line[i] == '$')
 		{
 			i++;
-			if (line[i] == '\0')
-			{
-				result = str_append(result, "$");
-				break ;
-			}
-			if (line[i] == '?')
-			{
-				exit_status_str = ft_itoa(g_shell.exit_status);
-				result = str_append(result, exit_status_str);
-				free(exit_status_str);
-				i++;
-			}
-			else if (ft_isalnum(line[i]) || line[i] == '_')
-			{
-				keylen = 0;
-				while (ft_isalnum(line[i + keylen]) || line[i + keylen] == '_')
-					keylen++;
-				varname = get_word(line + i, keylen);
-				value = NULL;
-				for (t_env *etmp = env; etmp; etmp = etmp->next)
-				{
-					if (ft_strcmp(varname, etmp->key) == 0)
-					{
-						value = etmp->value;
-						break ;
-					}
-				}
-				result = str_append(result, value ? value : "");
-				free(varname);
-				i += keylen;
-			}
-			else
-				result = str_append(result, "$");
+			result = helper_ex(line , &i , env , result);
 		}
 		else
-      result = nor_word(line, i, result);
-  }
+		{
+			result = nor_word(line, i, result);
+			while (line[i] && line[i] != '$')
+				i++;
+		}
+	}
 	return (result);
 }
-
 
 static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 {

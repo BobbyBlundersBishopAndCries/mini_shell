@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/14 13:26:40 by med              ###   ########.fr       */
+/*   Updated: 2025/07/15 13:31:53 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	init_commands(t_lst_cmd *cmds, t_env *envir)
 		execute_pipeline(cmd);
 		g_shell.child_running = 0;
 	}
-	free_array(cmd->envp);
 }
 
 void	setup_shell_state(void)
@@ -90,6 +89,21 @@ void	shell_loop(t_env *envir)
 			continue;
 		}
 		init_commands(cmds, envir);
+		t_cmd *tmp;
+		tmp = cmds->head;
+		while(tmp)
+		{
+			char **a;
+			int i = 0;
+			a = tmp->envp;
+			while(a[i])
+			{
+				free(a[i]);
+				i++;
+			}
+			free(a);
+			tmp = tmp->next;
+		}
 		close_redirs(cmds->head->files);
 		free_all(cmds->k);
 	}

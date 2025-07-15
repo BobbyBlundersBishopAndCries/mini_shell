@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/15 13:31:53 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:43:41 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	shell_loop(t_env *envir)
 			continue;
 		}
 		init_commands(cmds, envir);
+		close_redirs(cmds->head->files);
 		t_cmd *tmp;
 		tmp = cmds->head;
 		while(tmp)
@@ -104,7 +105,6 @@ void	shell_loop(t_env *envir)
 			free(a);
 			tmp = tmp->next;
 		}
-		close_redirs(cmds->head->files);
 		free_all(cmds->k);
 	}
 }

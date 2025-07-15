@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:29:43 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/15 16:57:39 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:33:32 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ static char	*get_word(const char *word, int size)
 	w[size] = '\0';
 	return (w);
 }
+static char *nor_word(const char *line , int i, char *result )
+{
+  int start;
+  start = i;
+  char *chunk;
+
+  chunk = NULL;
+  while (line[i] && line[i] != '$')
+    i++;
+  chunk = get_word(line + start, i - start);
+  result = str_append(result, chunk);
+  free(chunk);
+  return result;
+}
 
 char	*expand_line(const char *line, t_env *env)
 {
@@ -54,8 +68,6 @@ char	*expand_line(const char *line, t_env *env)
 	int		keylen;
 	char	*varname;
 	char	*value;
-	int		start;
-	char	*chunk;
 
 	result = NULL;
 	i = 0;
@@ -99,17 +111,11 @@ char	*expand_line(const char *line, t_env *env)
 				result = str_append(result, "$");
 		}
 		else
-		{
-			start = i;
-			while (line[i] && line[i] != '$')
-				i++;
-			chunk = get_word(line + start, i - start);
-			result = str_append(result, chunk);
-			free(chunk);
-		}
-	}
+      result = nor_word(line, i, result);
+  }
 	return (result);
 }
+
 
 static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 {

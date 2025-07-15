@@ -6,7 +6,7 @@
 /*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:39 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/14 13:32:46 by med              ###   ########.fr       */
+/*   Updated: 2025/07/16 00:06:59 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	sigint_handler(int signo)
 	g_shell.exit_status = 130;
 	if (g_shell.in_heredoc)
 	{
-		write(1, "\n", 1);
+		write(1, "^C\n", 3);
 	}
 	else if (!g_shell.child_running)
 	{
-		write(1, "\n", 1);
+		write(1, "^C\n", 3);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();

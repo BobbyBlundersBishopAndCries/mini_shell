@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/15 15:43:41 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/16 00:08:44 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,7 @@ void	shell_loop(t_env *envir)
 		tmp = cmds->head;
 		while(tmp)
 		{
-			char **a;
-			int i = 0;
-			a = tmp->envp;
-			while(a[i])
-			{
-				free(a[i]);
-				i++;
-			}
-			free(a);
+			free_array(tmp->envp);
 			tmp = tmp->next;
 		}
 		free_all(cmds->k);

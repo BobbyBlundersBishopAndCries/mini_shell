@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/16 11:15:00 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/16 23:45:00 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 #include <termios.h>
-#ifndef ECHOCTL
-#define ECHOCTL 0001000
-#endif
 # define READ_END 0
 # define WRITE_END 1
+# define PID_MAX 63337
+typedef struct s_fork_info
+{
+	pid_t	*pids;
+	int		*count;
+}	t_fork_info;
 
 typedef struct s_shell_state
 {
@@ -93,7 +96,6 @@ typedef struct s_cmd
 	t_redir				*files;
 	t_env				**env;
 	char				**envp;
-	int					fd[2];
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -278,8 +280,10 @@ int						handle_builtin_cmd(t_cmd *cmd);
 int						exec_error_status(int err);
 int						execute_builtin(t_cmd *cmd);
 void					error(void);
-void execute_command(t_cmd *cmd, t_lst_cmd *head);
-void execute_pipeline(t_cmd *cmd , t_lst_cmd *head);
+void					execute_command(t_cmd *cmd, t_lst_cmd *head);
+void					fork_and_execute(t_cmd *cmd, int prev_fd[2],
+							t_lst_cmd *head, t_fork_info *info);
+void					execute_pipeline(t_cmd *cmd , t_lst_cmd *head);
 /* signals */
 void					handle_signals(void);
 void					sigint_handler(int signo);

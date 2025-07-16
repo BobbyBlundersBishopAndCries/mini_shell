@@ -40,7 +40,7 @@ SRCS = main.c \
 			exec/fork_process.c\
 			exec/here_doc.c\
 			exec/signal.c \
-			exec/wait.c
+			exec/execute_pipeline.c
 			
 OBJS = $(SRCS:.c=.o)
 

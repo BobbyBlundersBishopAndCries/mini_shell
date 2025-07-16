@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:31 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/16 11:14:18 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/16 23:24:09 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,35 @@ static void	child_process_execution(t_cmd *cmd, int prev_fd[2], int next_fd[2] ,
 	exec_or_builtin(cmd, head);
 }
 
-static void	fork_and_execute(t_cmd *cmd, int prev_fd[2] , t_lst_cmd *head)
+static pid_t	pipe_and_fork(t_cmd *cmd, int next_fd[2], int prev_fd[2], t_lst_cmd *head)
 {
-	int		next_fd[2];
-	pid_t	pid;
+	pid_t pid;
 
 	next_fd[0] = -1;
 	next_fd[1] = -1;
 	if (cmd->next && pipe(next_fd) == -1)
 		error();
+
 	g_shell.child_running = 1;
 	pid = fork();
 	if (pid < 0)
 		error();
+
 	if (pid == 0)
 		child_process_execution(cmd, prev_fd, next_fd, head);
+	return (pid);
+}
+
+void fork_and_execute(t_cmd *cmd, int prev_fd[2], t_lst_cmd *head, t_fork_info *info)
+{
+	int		next_fd[2];
+	pid_t	pid;
+
+	pid = pipe_and_fork(cmd, next_fd, prev_fd, head);
+	info->pids[(*info->count)++] = pid;
 	if (prev_fd[0] != -1)
 		close(prev_fd[0]);
+
 	if (cmd->next)
 	{
 		prev_fd[0] = next_fd[0];
@@ -92,37 +104,4 @@ static void	fork_and_execute(t_cmd *cmd, int prev_fd[2] , t_lst_cmd *head)
 	}
 	else
 		prev_fd[0] = -1;
-}
-
-void	execute_pipeline(t_cmd *cmd , t_lst_cmd *head)
-{
-	int		prev_fd[2];
-	t_cmd	*tmp;
-	t_redir	*r;
-
-	prev_fd[0] = -1;
-	prev_fd[1] = -1;
-	if (handle_all_heredocs(cmd))
-		return ;
-	if (!cmd || !cmd->args || !cmd->args[0])
-	{
-		r = cmd->files;
-		while (r)
-		{
-			if (r->index == R_HEREDOC && r->fd > 2)
-				close(r->fd);
-			r = r->next;
-		}
-		g_shell.exit_status = 0;
-		return ;
-	}
-	tmp = cmd;
-	while (tmp)
-	{
-		fork_and_execute(tmp, prev_fd , head);
-		tmp = tmp->next;
-	}
-	handle_signals();
-	wait_for_children();
-	g_shell.child_running = 0;
 }

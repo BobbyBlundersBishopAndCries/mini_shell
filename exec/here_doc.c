@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 
-
 static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 {
 	char	*line;
@@ -21,6 +20,7 @@ static void	write_to_pipe_from_redir(t_redir *redir, int pipe_fd[2], t_env *env)
 
 	count = 1;
 	close(pipe_fd[0]);
+	restore_signals_to_default();
 	while (1)
 	{
 		write(1, "> ", 2);
@@ -65,7 +65,7 @@ int	handle_heredoc(t_redir *redir, t_env *env)
 		return (1);
 	if (id == 0)
 	{
-		restore_signals_to_default();
+		disable_echoctl();
 		write_to_pipe_from_redir(redir, pipe_fd, env);
 		exit(EXIT_SUCCESS);
 	}
@@ -76,7 +76,7 @@ int	handle_heredoc(t_redir *redir, t_env *env)
 	if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
-		if (sig == SIGINT || sig == SIGQUIT)
+		if (sig == SIGINT)
 		{
 			redir->fd = -1;
 			g_shell.exit_status = 128 + sig;

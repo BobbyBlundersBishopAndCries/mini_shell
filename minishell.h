@@ -285,6 +285,7 @@ void					handle_signals(void);
 void					sigint_handler(int signo);
 void					restore_signals_to_default(void);
 void					disable_echoctl(void);
+void					enable_echoctl(void);
 // here doc expandering 
 // export utils
 char	*expand_line(const char *line, t_env *env);

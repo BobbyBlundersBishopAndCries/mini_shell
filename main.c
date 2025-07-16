@@ -108,7 +108,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 
-	disable_echoctl();
 	shell_loop(envir);
 	free_env_list(envir);
 	return (g_shell.exit_status);

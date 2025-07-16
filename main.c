@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/16 00:08:44 by med              ###   ########.fr       */
+/*   Updated: 2025/07/16 11:17:05 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_commands(t_lst_cmd *cmds, t_env *envir)
 	else
 	{
 		g_shell.child_running = 1;
-		execute_pipeline(cmd);
+		execute_pipeline(cmd ,cmds);
 		g_shell.child_running = 0;
 	}
 }
@@ -110,7 +110,6 @@ int	main(int argc, char **argv, char **envp)
 
 	disable_echoctl();
 	shell_loop(envir);
-
 	free_env_list(envir);
 	return (g_shell.exit_status);
 }

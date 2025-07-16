@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:29 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/15 15:50:35 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:16:47 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*resolve_exec_path(t_cmd *cmd)
 	return (path_found(*(cmd->env), cmd->args[0]));
 }
 
-void	execute_command(t_cmd *cmd)
+void	execute_command(t_cmd *cmd, t_lst_cmd *head)
 {
 	char	*p;
 
@@ -90,16 +90,41 @@ void	execute_command(t_cmd *cmd)
 	if (is_directory(cmd->args[0]))
 	{
 		ft_printf(2, "minishell: %s: Is a directory\n", cmd->args[0]);
+		t_cmd *tmp;
+		tmp = head->head;
+		while(tmp)
+		{
+			free_array(tmp->envp);
+			tmp = tmp->next;
+		}
+		free_all(head->k);
 		exit(126);
 	}
 	p = resolve_exec_path(cmd);
 	if (!p)
 	{
 		ft_printf(2, "minishell: %s: command not found\n", cmd->args[0]);
+		t_cmd *tmp;
+		tmp = head->head;
+		while(tmp)
+		{
+			free_array(tmp->envp);
+			tmp = tmp->next;
+		}
+		free_all(head->k);
 		exit(127);
 	}
 	execve(p, cmd->args, cmd->envp);
 	ft_printf(2, "minishell: %s: %s\n", cmd->args[0], strerror(errno));
+	t_cmd *tmp;
+	tmp = head->head;
+	while (tmp)
+	{
+		free_array(tmp->envp);
+		tmp = tmp->next;
+	}
+	free_all(head->k);
+	
 	free(p);
 	exit(exec_error_status(errno));
 }

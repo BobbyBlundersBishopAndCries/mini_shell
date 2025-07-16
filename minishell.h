@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/15 22:15:43 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:15:00 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,8 +278,8 @@ int						handle_builtin_cmd(t_cmd *cmd);
 int						exec_error_status(int err);
 int						execute_builtin(t_cmd *cmd);
 void					error(void);
-void					execute_command(t_cmd *cmd);
-void					execute_pipeline(t_cmd *cmd);
+void execute_command(t_cmd *cmd, t_lst_cmd *head);
+void execute_pipeline(t_cmd *cmd , t_lst_cmd *head);
 /* signals */
 void					handle_signals(void);
 void					sigint_handler(int signo);

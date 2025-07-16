@@ -3,23 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   fork_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:31 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/16 00:23:33 by med              ###   ########.fr       */
+/*   Updated: 2025/07/16 11:14:18 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	exec_or_builtin(t_cmd *cmd)
+static void	exec_or_builtin(t_cmd *cmd, t_lst_cmd *head)
 {
 	if (is_builtin(cmd->args[0]))
 	{
 		g_shell.exit_status = execute_builtin(cmd);
-		exit(g_shell.exit_status);
+		{
+			t_cmd *tmp;
+			tmp = head->head;
+			while (tmp)
+			{
+				free_array(tmp->envp);
+				tmp = tmp->next;
+			}
+		free_all(head->k);
+			exit(g_shell.exit_status);
+		}
 	}
-	execute_command(cmd);
+	execute_command(cmd, head);
 	exit(EXIT_FAILURE);
 }
 
@@ -38,17 +48,27 @@ static void	setup_child_fds(t_cmd *cmd, int prev_fd[2], int next_fd[2])
 	}
 }
 
-static void	child_process_execution(t_cmd *cmd, int prev_fd[2], int next_fd[2])
+static void	child_process_execution(t_cmd *cmd, int prev_fd[2], int next_fd[2] , t_lst_cmd *head)
 {
 	restore_signals_to_default();
 	setup_child_fds(cmd, prev_fd, next_fd);
 	if (setup_redirections(cmd->files))
+	{
+		t_cmd *tmp;
+		tmp = head->head;
+		while(tmp)
+		{
+			free_array(tmp->envp);
+			tmp = tmp->next;
+		}
+		free_all(head->k);
 		exit(EXIT_FAILURE);
+	}
 	close_redirs(cmd->files);
-	exec_or_builtin(cmd);
+	exec_or_builtin(cmd, head);
 }
 
-static void	fork_and_execute(t_cmd *cmd, int prev_fd[2])
+static void	fork_and_execute(t_cmd *cmd, int prev_fd[2] , t_lst_cmd *head)
 {
 	int		next_fd[2];
 	pid_t	pid;
@@ -62,7 +82,7 @@ static void	fork_and_execute(t_cmd *cmd, int prev_fd[2])
 	if (pid < 0)
 		error();
 	if (pid == 0)
-		child_process_execution(cmd, prev_fd, next_fd);
+		child_process_execution(cmd, prev_fd, next_fd, head);
 	if (prev_fd[0] != -1)
 		close(prev_fd[0]);
 	if (cmd->next)
@@ -74,7 +94,7 @@ static void	fork_and_execute(t_cmd *cmd, int prev_fd[2])
 		prev_fd[0] = -1;
 }
 
-void	execute_pipeline(t_cmd *cmd)
+void	execute_pipeline(t_cmd *cmd , t_lst_cmd *head)
 {
 	int		prev_fd[2];
 	t_cmd	*tmp;
@@ -99,7 +119,7 @@ void	execute_pipeline(t_cmd *cmd)
 	tmp = cmd;
 	while (tmp)
 	{
-		fork_and_execute(tmp, prev_fd);
+		fork_and_execute(tmp, prev_fd , head);
 		tmp = tmp->next;
 	}
 	handle_signals();

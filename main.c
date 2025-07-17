@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/17 15:21:39 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:40:31 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	shell_loop(t_env *envir)
 		setup_shell_state();
 		input = readline("minishell:$ ");
 		if (!input)
+		{
+			free_env_list(envir);
 			exit_shell();
+		}
 		if (!check_tabs_spaces(input))
 		{
 			free(input);

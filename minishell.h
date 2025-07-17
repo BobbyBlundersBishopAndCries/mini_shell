@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/17 14:35:43 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:16:09 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,14 @@ char					*strjoin_val_path(char *s1, char *s2, int flag);
 char					**env_tochar(t_env *env);
 
 /* builtins */
+typedef struct s_h
+{
+	char	*eq;
+	char	*key;
+	char	*val;
+	t_env	*existing;
+
+}			t_h;
 int						ft_cd(t_cmd *cmd);
 int						ft_env(t_cmd *cmd);
 int						ft_pwd(void);
@@ -294,4 +302,5 @@ void					enable_echoctl(void);
 // here doc expandering 
 // export utils
 char	*expand_line(const char *line, t_env *env);
+void	export_argument(t_env **env, char *arg);
 #endif

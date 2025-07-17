@@ -6,50 +6,11 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:54:21 by med               #+#    #+#             */
-/*   Updated: 2025/07/15 16:06:15 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:13:14 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static void	handle_new_export(t_env **env, char *arg)
-{
-	addback_node(env, arg);
-	sort_list(*env);
-}
-
-static void	export_argument(t_env **env, char *arg)
-{
-	char	*eq;
-	char	*key;
-	char	*val;
-	t_env	*existing;
-
-	if (!arg || !is_valid_identifier(arg))
-	{
-		ft_printf(2, "minishell: export: `%s`: not a valid identifier\n", arg);
-		return ;
-	}
-	eq = ft_strchr(arg, '=');
-	if (!eq)
-	{
-		existing = find_env_node(*env, arg);
-		if (!existing)
-			handle_new_export(env, arg);
-		return ;
-	}
-	key = ft_substr(arg, 0, eq - arg);
-	val = ft_strdup(eq + 1);
-	if (!key || !val)
-		return ;
-	existing = find_env_node(*env, key);
-	if (existing)
-		update_env_value(existing, val);
-	else
-		handle_new_export(env, arg);
-	free(key);
-	free(val);
-}
 
 static int	count_non_empty_args(char **args)
 {

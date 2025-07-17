@@ -20,11 +20,10 @@ int	is_builtin(char *cmd)
 		|| ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "exit") == 0
 		|| ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "pwd") == 0
 		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, ":") == 0
-		|| ft_strcmp(cmd, "!") == 0
-		|| ft_strcmp(cmd, ":") == 0);
+		|| ft_strcmp(cmd, "!") == 0 || ft_strcmp(cmd, ":") == 0);
 }
 
-int	handle_builtin_cmd(t_cmd *cmd , t_lst_cmd *head)
+int	handle_builtin_cmd(t_cmd *cmd, t_lst_cmd *head)
 {
 	if (ft_strcmp(cmd->args[0], "env") == 0)
 		return (ft_env(cmd));

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wait.c                                             :+:      :+:    :+:   */
+/*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:02:14 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/16 23:45:22 by med              ###   ########.fr       */
+/*   Updated: 2025/07/17 16:23:19 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	wait_for_pipeline(pid_t *pids, int count)
 {
-	int		status;
-	int		exit_status;
-	int		i;
-	
+	int	status;
+	int	exit_status;
+	int	i;
+
 	i = 0;
 	exit_status = 0;
 	while (i < count)
@@ -25,7 +25,7 @@ void	wait_for_pipeline(pid_t *pids, int count)
 		if (waitpid(pids[i], &status, 0) == -1)
 		{
 			perror("waitpid");
-			continue;
+			continue ;
 		}
 		if (i == count - 1)
 		{
@@ -39,13 +39,12 @@ void	wait_for_pipeline(pid_t *pids, int count)
 	g_shell.exit_status = exit_status;
 }
 
-static bool validate_pipeline(t_cmd *cmd)
+static bool	validate_pipeline(t_cmd *cmd)
 {
-	t_redir *r;
-	
-	if (handle_all_heredocs(cmd))
-		return false;
+	t_redir	*r;
 
+	if (handle_all_heredocs(cmd))
+		return (false);
 	if (!cmd || !cmd->args || !cmd->args[0])
 	{
 		if (cmd != NULL)
@@ -59,25 +58,23 @@ static bool validate_pipeline(t_cmd *cmd)
 			r = r->next;
 		}
 		g_shell.exit_status = 0;
-		return false;
+		return (false);
 	}
-	return true;
+	return (true);
 }
 
-void execute_pipeline(t_cmd *cmd, t_lst_cmd *head)
+void	execute_pipeline(t_cmd *cmd, t_lst_cmd *head)
 {
-	int prev_fd[2] = {-1, -1};
-	t_cmd	*tmp;
-	pid_t pids[PID_MAX];
-	int count;
-	
+	int			prev_fd[2] = {-1, -1};
+	t_cmd		*tmp;
+	pid_t		pids[PID_MAX];
+	int			count;
+	t_fork_info	info= {pids, &count};
+
 	tmp = cmd;
 	count = 0;
-	t_fork_info info = {pids, &count};
-
 	if (!validate_pipeline(cmd))
-		return;
-
+		return ;
 	while (tmp)
 	{
 		fork_and_execute(tmp, prev_fd, head, &info);

@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 t_shell_state	g_shell = {.exit_status = 0, .in_heredoc = 0,
-	.child_running = 0};
+		.child_running = 0};
 
 int	check_tabs_spaces(char *input)
 {
@@ -45,7 +45,7 @@ void	init_commands(t_lst_cmd *cmds, t_env *envir)
 	else
 	{
 		g_shell.child_running = 1;
-		execute_pipeline(cmd ,cmds);
+		execute_pipeline(cmd, cmds);
 		g_shell.child_running = 0;
 	}
 }
@@ -66,7 +66,8 @@ void	shell_loop(t_env *envir)
 {
 	char		*input;
 	t_lst_cmd	*cmds;
-	
+		t_cmd *tmp;
+
 	while (1)
 	{
 		setup_shell_state();
@@ -76,7 +77,7 @@ void	shell_loop(t_env *envir)
 		if (!check_tabs_spaces(input))
 		{
 			free(input);
-			continue;
+			continue ;
 		}
 		if (*input)
 			add_history(input);
@@ -85,14 +86,13 @@ void	shell_loop(t_env *envir)
 		if (!cmds || !cmds->head)
 		{
 			if (cmds)
-			free_all(cmds->k);
-			continue;
+				free_all(cmds->k);
+			continue ;
 		}
 		init_commands(cmds, envir);
 		close_redirs(cmds->head->files);
-		t_cmd *tmp;
 		tmp = cmds->head;
-		while(tmp)
+		while (tmp)
 		{
 			free_array(tmp->envp);
 			tmp = tmp->next;
@@ -104,11 +104,10 @@ void	shell_loop(t_env *envir)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env *envir;
-	
+	t_env	*envir;
+
 	(void)argc;
 	(void)argv;
-
 	envir = get_env(envp);
 	shell_loop(envir);
 	return (g_shell.exit_status);

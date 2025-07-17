@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:18:24 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/17 14:36:01 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:26:30 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,10 @@ char	*ft_strdump(const char *s1, t_lst_hk *x)
 	return (result);
 }
 
-
-void free_shellax(t_lst_cmd *head)
+void	free_shellax(t_lst_cmd *head)
 {
-	t_env *env;
-	t_cmd *tmp;
+	t_env	*env;
+	t_cmd	*tmp;
 
 	env = NULL;
 	tmp = NULL;

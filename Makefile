@@ -27,6 +27,7 @@ SRCS = main.c \
 			utiles_simo/export_utils.c \
 			utiles_simo/env_tochar.c\
 			utiles_simo/errno.c\
+			utiles_simo/export_snd.c \
 			builtins/ft_cd.c \
 			builtins/ft_env.c \
 			builtins/ft_pwd.c \

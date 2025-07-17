@@ -85,8 +85,8 @@ static void	check_exit_argument(const char *str)
 
 int	ft_exit(t_cmd *cmd, t_lst_cmd *head)
 {
-	int		exit_status;
-	int		count;
+	int	exit_status;
+	int	count;
 
 	count = arg_count(cmd->args);
 	exit_status = 0;

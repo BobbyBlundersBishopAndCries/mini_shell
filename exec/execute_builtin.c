@@ -74,7 +74,7 @@ static void	refresh_envp_if_needed(t_cmd *cmd)
 	}
 }
 
-int	execute_builtin(t_cmd *cmd , t_lst_cmd *head)
+int	execute_builtin(t_cmd *cmd, t_lst_cmd *head)
 {
 	int	status;
 	int	saved_stdout;
@@ -88,7 +88,7 @@ int	execute_builtin(t_cmd *cmd , t_lst_cmd *head)
 		return (1);
 	if (!is_builtin(cmd->args[0]))
 		return (1);
-	status = handle_builtin_cmd(cmd , head);
+	status = handle_builtin_cmd(cmd, head);
 	refresh_envp_if_needed(cmd);
 	restore_redirections(saved_stdout, saved_stdin);
 	return (status);

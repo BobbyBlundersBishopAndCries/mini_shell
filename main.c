@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/16 11:17:05 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:12:40 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init_commands(t_lst_cmd *cmds, t_env *envir)
 	}
 	cmd = cmds->head;
 	if (!cmd->next && is_builtin(cmd->args[0]))
-		g_shell.exit_status = execute_builtin(cmd);
+		g_shell.exit_status = execute_builtin(cmd, cmds);
 	else
 	{
 		g_shell.child_running = 1;

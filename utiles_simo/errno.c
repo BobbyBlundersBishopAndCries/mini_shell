@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errno.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:49:32 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/14 14:52:35 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/17 13:15:59 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_builtin(char *cmd)
 		|| ft_strcmp(cmd, ":") == 0);
 }
 
-int	handle_builtin_cmd(t_cmd *cmd)
+int	handle_builtin_cmd(t_cmd *cmd , t_lst_cmd *head)
 {
 	if (ft_strcmp(cmd->args[0], "env") == 0)
 		return (ft_env(cmd));
@@ -33,7 +33,7 @@ int	handle_builtin_cmd(t_cmd *cmd)
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		return (ft_pwd());
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-		return (ft_exit(cmd));
+		return (ft_exit(cmd, head));
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (ft_echo(cmd));
 	if (ft_strcmp(cmd->args[0], "export") == 0)

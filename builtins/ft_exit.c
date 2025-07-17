@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 03:35:36 by med               #+#    #+#             */
-/*   Updated: 2025/07/14 20:15:12 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:19:52 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	check_exit_argument(const char *str)
 	}
 }
 
-int	ft_exit(t_cmd *cmd)
+int	ft_exit(t_cmd *cmd   , t_lst_cmd *head)
 {
 	int	exit_status;
 	int	count;
@@ -103,5 +103,16 @@ int	ft_exit(t_cmd *cmd)
 	else
 		exit_status = g_shell.exit_status;
 	ft_printf(1, "exit\n");
+		t_cmd *tmp;
+	tmp = head->head;
+	while (tmp)
+	{
+		free_array(tmp->envp);
+		tmp = tmp->next;
+	}
+
+	t_env *env = *head->head->env;
+	free_env_list(env);
+	free_all(head->k);
 	exit(exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 12:58:17 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/13 14:49:24 by med              ###   ########.fr       */
+/*   Updated: 2025/07/17 13:15:46 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	refresh_envp_if_needed(t_cmd *cmd)
 	}
 }
 
-int	execute_builtin(t_cmd *cmd)
+int	execute_builtin(t_cmd *cmd , t_lst_cmd *head)
 {
 	int	status;
 	int	saved_stdout;
@@ -88,7 +88,7 @@ int	execute_builtin(t_cmd *cmd)
 		return (1);
 	if (!is_builtin(cmd->args[0]))
 		return (1);
-	status = handle_builtin_cmd(cmd);
+	status = handle_builtin_cmd(cmd , head);
 	refresh_envp_if_needed(cmd);
 	restore_redirections(saved_stdout, saved_stdin);
 	return (status);

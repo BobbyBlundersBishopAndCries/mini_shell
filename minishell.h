@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/16 23:45:00 by med              ###   ########.fr       */
+/*   Updated: 2025/07/17 13:18:19 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,7 @@ char					**env_tochar(t_env *env);
 int						ft_cd(t_cmd *cmd);
 int						ft_env(t_cmd *cmd);
 int						ft_pwd(void);
-int						ft_exit(t_cmd *cmd);
+int						ft_exit(t_cmd *cmd, t_lst_cmd *head);
 int						ft_echo(t_cmd *cmd);
 int						ft_export(t_cmd *cmd);
 int						ft_unset(t_cmd *cmd);
@@ -276,9 +276,9 @@ int						handle_heredoc(t_redir *redir, t_env *env);
 void					close_redirs(t_redir *list);
 /* execute command */
 void					wait_for_children(void);
-int						handle_builtin_cmd(t_cmd *cmd);
+int						handle_builtin_cmd(t_cmd *cmd, t_lst_cmd *head);
 int						exec_error_status(int err);
-int						execute_builtin(t_cmd *cmd);
+int						execute_builtin(t_cmd *cmd, t_lst_cmd *head);
 void					error(void);
 void					execute_command(t_cmd *cmd, t_lst_cmd *head);
 void					fork_and_execute(t_cmd *cmd, int prev_fd[2],

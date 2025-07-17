@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/17 16:16:09 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:16:20 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,8 +280,6 @@ int						ft_unset(t_cmd *cmd);
 int						open_file(t_redir *redir, t_redirct mode);
 int						redirect_fd(int fd, int std_fd);
 int						setup_redirections(t_redir *list);
-int						handle_all_heredocs(t_cmd *cmd);
-int						handle_heredoc(t_redir *redir, t_env *env);
 void					close_redirs(t_redir *list);
 /* execute command */
 void					wait_for_children(void);
@@ -291,7 +289,7 @@ int						execute_builtin(t_cmd *cmd, t_lst_cmd *head);
 void					error(void);
 void					execute_command(t_cmd *cmd, t_lst_cmd *head);
 void					fork_and_execute(t_cmd *cmd, int prev_fd[2],
-							t_lst_cmd *head, t_fork_info *info);
+t_lst_cmd *head, t_fork_info *info);
 void					execute_pipeline(t_cmd *cmd , t_lst_cmd *head);
 /* signals */
 void					handle_signals(void);
@@ -300,6 +298,10 @@ void					restore_signals_to_default(void);
 void					disable_echoctl(void);
 void					enable_echoctl(void);
 // here doc expandering 
+void					heredoc_process(t_redir *redir, int pipe_fd[2], t_env *env);
+int						heredoc_status(int status, t_redir *redir, int read_end);
+int						handle_all_heredocs(t_cmd *cmd);
+int						handle_heredoc(t_redir *redir, t_env *env);
 // export utils
 char	*expand_line(const char *line, t_env *env);
 void	export_argument(t_env **env, char *arg);

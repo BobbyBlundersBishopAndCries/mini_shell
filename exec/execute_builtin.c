@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 12:58:17 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/17 15:20:02 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:57:48 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static int	save_fds(t_redir *redir, int *saved_stdout, int *saved_stdin)
 {
-	if ((redir->index == R_OUT || redir->index == R_APPEND) && *saved_stdout ==
-		-1)
+	if ((redir->index == R_OUT || redir->index == R_APPEND)
+		&& *saved_stdout == -1)
 		*saved_stdout = dup(STDOUT_FILENO);
-	if ((redir->index == R_IN || redir->index == R_HEREDOC) && *saved_stdin ==
-		-1)
+	if ((redir->index == R_IN || redir->index == R_HEREDOC)
+		&& *saved_stdin == -1)
 		*saved_stdin = dup(STDIN_FILENO);
 	return (0);
 }

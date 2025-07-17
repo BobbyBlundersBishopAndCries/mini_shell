@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:52:39 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/17 17:43:48 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:41:05 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	error(void)
-{
-	perror("error");
-	exit(EXIT_FAILURE);
-}
 
 void	sigint_handler(int signo)
 {
@@ -44,8 +38,16 @@ void	handle_signals(void)
 
 void	restore_signals_to_default(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
+	if (g_shell.child_running)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+	}
+	if (g_shell.in_heredoc)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }
 
 void	disable_echoctl(void)
@@ -61,11 +63,11 @@ void	disable_echoctl(void)
 
 void	enable_echoctl(void)
 {
-	struct termios term;
+	struct termios	term;
 
 	if (tcgetattr(STDIN_FILENO, &term) == 0)
 	{
-		term.c_lflag |= ECHOCTL; // Re-enable echoing of control characters
+		term.c_lflag |= ECHOCTL;
 		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	}
 }

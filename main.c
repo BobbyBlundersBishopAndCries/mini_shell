@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/17 13:12:40 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:21:39 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,17 @@ void	shell_loop(t_env *envir)
 		}
 		free_all(cmds->k);
 	}
+	free_env_list(envir);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env *envir = get_env(envp);
-
+	t_env *envir;
+	
 	(void)argc;
 	(void)argv;
 
+	envir = get_env(envp);
 	shell_loop(envir);
-	free_env_list(envir);
 	return (g_shell.exit_status);
 }

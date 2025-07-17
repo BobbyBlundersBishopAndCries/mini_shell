@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/17 13:18:19 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:35:43 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,8 @@ t_lst_cmd				*fill_struct(t_lst_token *lst_token, t_lst_hk *x,
 int						addback_node(t_env **head, char *av);
 void					free_env_list(t_env *head);
 t_env					*get_env(char **env);
-void					update_env_value(t_env *node, char *value);
+void free_shellax(t_lst_cmd *head);
+void update_env_value(t_env *node, char *value);
 /* cd_utils.c */
 char					*get_value(t_env *env, char *key);
 void					update_val(t_env *env, char *key, char *new_val);

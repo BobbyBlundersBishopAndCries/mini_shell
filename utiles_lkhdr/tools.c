@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:18:24 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/01 17:14:03 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:36:01 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,23 @@ char	*ft_strdump(const char *s1, t_lst_hk *x)
 	}
 	result[i] = '\0';
 	return (result);
+}
+
+
+void free_shellax(t_lst_cmd *head)
+{
+	t_env *env;
+	t_cmd *tmp;
+
+	env = NULL;
+	tmp = NULL;
+	tmp = head->head;
+	while (tmp)
+	{
+		free_array(tmp->envp);
+		tmp = tmp->next;
+	}
+	env = *head->head->env;
+	free_env_list(env);
+	free_all(head->k);
 }

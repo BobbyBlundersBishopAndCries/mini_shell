@@ -163,29 +163,30 @@ typedef struct s_exstrct
 }						t_exstrct;
 typedef struct s_cih
 {
-	t_lst_token	*tmp;
-	t_token		*m;
-	t_token		*curr;
-	t_token		*prev;
-	char		*t;
-	int			size;
+	t_lst_token			*tmp;
+	t_token				*m;
+	t_token				*curr;
+	t_token				*prev;
+	char				*t;
+	int					size;
 
-}				t_cih;
+}						t_cih;
 
 typedef struct s_pd
 {
-	char		*s;
-	bool		s_q;
-	bool		d_q;
-	int			i;
-	int			j;
-}				t_pd;
+	char				*s;
+	bool				s_q;
+	bool				d_q;
+	int					i;
+	int					j;
+}						t_pd;
 
-char *string_expander(char *str, t_lst_hk *x, t_type a,
-											t_env *env);
+char					*string_expander(char *str, t_lst_hk *x, t_type a,
+							t_env *env);
 void					expander(t_lst_token *token, t_lst_hk *x, t_env *env);
-void handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env);
-char *ft_strdump(const char *s1, t_lst_hk *x);
+void					handle_dollar(char *str, t_exstrct *q, t_lst_hk *x,
+							t_env *env);
+char					*ft_strdump(const char *s1, t_lst_hk *x);
 char					*ft_join(const char *s1, const char *s2, t_lst_hk *x);
 char					*change_value(char *key, size_t count, t_lst_hk *x,
 							t_env *env);

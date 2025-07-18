@@ -6,85 +6,11 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:07:48 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/15 20:29:33 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/17 19:37:16 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static size_t	ft_number_size(int number)
-{
-	size_t	length;
-
-	length = 0;
-	if (number == 0)
-		return (1);
-	if (number < 0)
-		length += 1;
-	while (number != 0)
-	{
-		number /= 10;
-		length++;
-	}
-	return (length);
-}
-
-char	*ft_ittoa(int n, t_lst_hk *x)
-{
-	char	*string;
-	size_t	length;
-
-	length = ft_number_size(n);
-	if (n == -2147483648)
-		return (ft_strdump("-2147483648", x));
-	string = (char *)ft_malloc(sizeof(char) * length + 1, x);
-	if (string == NULL)
-		return (NULL);
-	if (n < 0)
-	{
-		string[0] = '-';
-		n = -n;
-	}
-	if (n == 0)
-		string[0] = '0';
-	string[length] = '\0';
-	while (n != 0)
-	{
-		string[length - 1] = (n % 10) + '0';
-		n = n / 10;
-		length--;
-	}
-	return (string);
-}
-
-static void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
-{
-	char	*val;
-	size_t	var_len;
-
-	var_len = 0;
-	while (str[q->i + var_len] && (ft_isalnum(str[q->i + var_len]) || str[q->i
-			+ var_len] == '_'))
-		var_len++;
-	if (var_len > 0)
-	{
-		val = change_value(str + q->i, var_len, x, env);
-		q->res = ft_join(q->res, val, x);
-		q->i += var_len;
-	}
-	else if (str[q->i] && !q->in_d)
-	{
-		if (str[q->i] == '?')
-			val = ft_ittoa(g_shell.exit_status, x);
-		else
-			val = change_value(str + q->i, 1, x, env);
-		q->res = ft_join(q->res, val, x);
-		if (str[q->i] != '\'' || str[q->i] != '"')
-			q->i++;
-	}
-	else
-		q->res = ft_join(q->res, ft_strdump("$", x), x);
-}
 
 static void	constr(t_exstrct *q, t_lst_hk *x)
 {
@@ -94,41 +20,40 @@ static void	constr(t_exstrct *q, t_lst_hk *x)
 	q->res = ft_strdump("", x);
 }
 
+void	constr_pd(t_pd *p, t_lst_hk *x, char *str)
+{
+	p->s = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), x);
+	p->i = 0;
+	p->s_q = false;
+	p->d_q = false;
+	p->j = 0;
+}
+
 char	*process_del(char *str, t_lst_hk *x)
 {
-	char	*s;
-	int		i;
-	bool	s_q;
-	bool	d_q;
-	int		j;
+	t_pd	q;
 
-	s = NULL;
-	s = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), x);
-	i = 0;
-	s_q = false;
-	d_q = false;
-	j = 0;
-	while (str[i])
+	constr_pd(&q, x, str);
+	while (str[q.i])
 	{
-		if (str[i] == '\'')
-			s_q = !s_q;
-		if (str[i] == '"')
-			d_q = !d_q;
-		if (str[i] == '$' && (!d_q && !s_q) && (str[i + 1] == '\'' || str[i
-				+ 1] == '"'))
-			i++;
-		s[j] = str[i];
-		j++;
-		i++;
+		if (str[q.i] == '\'')
+			q.s_q = !q.s_q;
+		if (str[q.i] == '"')
+			q.d_q = !q.d_q;
+		if (str[q.i] == '$' && (!q.d_q && !q.s_q) && (str[q.i + 1] == '\''
+				|| str[q.i + 1] == '"'))
+			q.i++;
+		q.s[q.j] = str[q.i];
+		q.i++;
+		q.j++;
 	}
-	s[j] = '\0';
-	return (s);
+	q.s[q.j] = '\0';
+	return (q.s);
 }
 
 char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env)
 {
-	t_exstrct	q;
-
+	t_exstrct (q);
 	constr(&q, x);
 	if (a == HEREDOC)
 		str = process_del(str, x);
@@ -155,45 +80,45 @@ char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env)
 	return (q.res);
 }
 
+void	constr_cih(t_cih *cih, t_lst_token *token)
+{
+	cih->curr = NULL;
+	cih->prev = NULL;
+	cih->tmp = token;
+	cih->curr = cih->tmp->head;
+	cih->prev = cih->curr;
+	cih->curr = cih->curr->next;
+	cih->m = cih->tmp->head;
+	while (cih->m)
+	{
+		cih->m->deja_quoted = false;
+		cih->m = cih->m->next;
+	}
+}
+
 void	check_if_heredocquoted(t_lst_token *token)
 {
-	t_lst_token	*tmp;
-	t_token		*m;
-	t_token		*curr;
-	t_token		*prev;
-	char		*t;
-	int			size;
+	t_cih	q;
 
-	curr = NULL;
-	prev = NULL;
-	tmp = token;
-	curr = tmp->head;
-	prev = curr;
-	curr = curr->next;
-	m = tmp->head;
-	while (m)
+	constr_cih(&q, token);
+	while (q.curr)
 	{
-		m->deja_quoted = false;
-		m = m->next;
-	}
-	while (curr)
-	{
-		if (is_redir(prev))
+		if (is_redir(q.prev))
 		{
-			t = curr->token;
-			size = 0;
-			while (t[size])
+			q.t = q.curr->token;
+			q.size = 0;
+			while (q.t[q.size])
 			{
-				if (t[size] == '\'' || t[size] == '"')
+				if (q.t[q.size] == '\'' || q.t[q.size] == '"')
 				{
-					curr->deja_quoted = true;
+					q.curr->deja_quoted = true;
 					break ;
 				}
-				size++;
+				q.size++;
 			}
 		}
-		prev = curr;
-		curr = curr->next;
+		q.prev = q.curr;
+		q.curr = q.curr->next;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:45:49 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/09 18:45:50 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/18 04:25:13 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ static int	tokenizer_init(t_help *q, t_lst_hk *x, char *str)
 	}
 	return (1);
 }
-
+bool is_space(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n');
+}
 t_lst_token	*tokenizer(char *str, t_lst_hk *x)
 {
 	t_help	q;
@@ -46,7 +49,7 @@ t_lst_token	*tokenizer(char *str, t_lst_hk *x)
 		return (NULL);
 	while (str[q.i])
 	{
-		while (str[q.i] && isspace(str[q.i]))
+		while (str[q.i] && is_space(str[q.i]))
 			q.i++;
 		if (str[q.i] == '|')
 			q.new = get_pipe(&q.i, x);

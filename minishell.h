@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/17 18:16:20 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/17 19:30:44 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-#include <termios.h>
+# include <termios.h>
 # define READ_END 0
 # define WRITE_END 1
 # define PID_MAX 63337
 typedef struct s_fork_info
 {
-	pid_t	*pids;
-	int		*count;
-}	t_fork_info;
+	pid_t				*pids;
+	int					*count;
+}						t_fork_info;
 
 typedef struct s_shell_state
 {
@@ -85,7 +85,7 @@ typedef struct s_redir
 {
 	char				*files;
 	t_redirct			index;
-	bool				deja_quoted ;
+	bool				deja_quoted;
 	int					fd;
 	struct s_redir		*next;
 }						t_redir;
@@ -161,10 +161,31 @@ typedef struct s_exstrct
 	bool				in_d;
 	char				tmp[2];
 }						t_exstrct;
+typedef struct s_cih
+{
+	t_lst_token	*tmp;
+	t_token		*m;
+	t_token		*curr;
+	t_token		*prev;
+	char		*t;
+	int			size;
 
-char					*string_expander(char *str, t_lst_hk *x, t_type a,t_env *env);
+}				t_cih;
+
+typedef struct s_pd
+{
+	char		*s;
+	bool		s_q;
+	bool		d_q;
+	int			i;
+	int			j;
+}				t_pd;
+
+char *string_expander(char *str, t_lst_hk *x, t_type a,
+											t_env *env);
 void					expander(t_lst_token *token, t_lst_hk *x, t_env *env);
-char					*ft_strdump(const char *s1, t_lst_hk *x);
+void handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env);
+char *ft_strdump(const char *s1, t_lst_hk *x);
 char					*ft_join(const char *s1, const char *s2, t_lst_hk *x);
 char					*change_value(char *key, size_t count, t_lst_hk *x,
 							t_env *env);
@@ -242,8 +263,8 @@ t_lst_cmd				*fill_struct(t_lst_token *lst_token, t_lst_hk *x,
 int						addback_node(t_env **head, char *av);
 void					free_env_list(t_env *head);
 t_env					*get_env(char **env);
-void free_shellax(t_lst_cmd *head);
-void update_env_value(t_env *node, char *value);
+void					free_shellax(t_lst_cmd *head);
+void					update_env_value(t_env *node, char *value);
 /* cd_utils.c */
 char					*get_value(t_env *env, char *key);
 void					update_val(t_env *env, char *key, char *new_val);
@@ -263,12 +284,12 @@ char					**env_tochar(t_env *env);
 /* builtins */
 typedef struct s_h
 {
-	char	*eq;
-	char	*key;
-	char	*val;
-	t_env	*existing;
+	char				*eq;
+	char				*key;
+	char				*val;
+	t_env				*existing;
 
-}			t_h;
+}						t_h;
 int						ft_cd(t_cmd *cmd);
 int						ft_env(t_cmd *cmd);
 int						ft_pwd(void);
@@ -289,20 +310,22 @@ int						execute_builtin(t_cmd *cmd, t_lst_cmd *head);
 void					error(void);
 void					execute_command(t_cmd *cmd, t_lst_cmd *head);
 void					fork_and_execute(t_cmd *cmd, int prev_fd[2],
-t_lst_cmd *head, t_fork_info *info);
-void					execute_pipeline(t_cmd *cmd , t_lst_cmd *head);
+							t_lst_cmd *head, t_fork_info *info);
+void					execute_pipeline(t_cmd *cmd, t_lst_cmd *head);
 /* signals */
 void					handle_signals(void);
 void					sigint_handler(int signo);
 void					restore_signals_to_default(void);
 void					disable_echoctl(void);
 void					enable_echoctl(void);
-// here doc expandering 
-void					heredoc_process(t_redir *redir, int pipe_fd[2], t_env *env);
-int						heredoc_status(int status, t_redir *redir, int read_end);
+// here doc expandering
+void					heredoc_process(t_redir *redir, int pipe_fd[2],
+							t_env *env);
+int						heredoc_status(int status, t_redir *redir,
+							int read_end);
 int						handle_all_heredocs(t_cmd *cmd);
 int						handle_heredoc(t_redir *redir, t_env *env);
 // export utils
-char	*expand_line(const char *line, t_env *env);
-void	export_argument(t_env **env, char *arg);
+char					*expand_line(const char *line, t_env *env);
+void					export_argument(t_env **env, char *arg);
 #endif

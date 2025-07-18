@@ -19,6 +19,7 @@ SRCS = main.c \
 			lexical_analyser/tokenizer_helper.c \
 			syntax_analyser/sa_helper.c \
 			expanding_variables/expander_helper.c \
+			expanding_variables/utiles.c \
 			fin_parse/filling.c \
 			fin_parse/filling_helper.c \
 			utiles_simo/get_env.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/17 17:40:31 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/18 04:21:58 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,27 @@ void	exit_shell(void)
 	write(1, "exit\n", 5);
 	exit(g_shell.exit_status);
 }
+void free_shell(t_lst_cmd*head)
+{
+	t_cmd *tmp;
+	tmp = head->head;
+	t_env *env = *tmp->env;
+	t_lst_hk *x;
+	x = head->k;
+	while(tmp)
+	{
+		free_array(tmp->envp);
+		tmp = tmp->next;
+	}
+	free_all(x);
 
+	free_env_list(env);
+}
 void	shell_loop(t_env *envir)
 {
 	char		*input;
 	t_lst_cmd	*cmds;
-		t_cmd *tmp;
+	t_cmd *tmp;
 
 	while (1)
 	{

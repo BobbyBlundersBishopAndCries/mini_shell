@@ -20,6 +20,7 @@ SRCS = main.c \
 			lexical_analyser/tokenizer_helper.c \
 			syntax_analyser/sa_helper.c \
 			expanding_variables/expander_helper.c \
+			expanding_variables/utiles_2.c \
 			expanding_variables/utiles.c \
 			fin_parse/filling.c \
 			fin_parse/filling_helper.c \
@@ -40,6 +41,7 @@ SRCS = main.c \
 			exec/execute_builtin.c \
 			exec/execute_command.c \
 			exec/red.c \
+			exec/ex_helpheredoc.c \
 			exec/fork_process.c\
 			exec/here_doc_utils.c \
 			exec/here_doc.c\

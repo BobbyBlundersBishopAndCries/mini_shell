@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:07:48 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/17 19:37:16 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:15:52 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,6 @@ static void	constr(t_exstrct *q, t_lst_hk *x)
 	q->in_d = false;
 	q->in_s = false;
 	q->res = ft_strdump("", x);
-}
-
-void	constr_pd(t_pd *p, t_lst_hk *x, char *str)
-{
-	p->s = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), x);
-	p->i = 0;
-	p->s_q = false;
-	p->d_q = false;
-	p->j = 0;
-}
-
-char	*process_del(char *str, t_lst_hk *x)
-{
-	t_pd	q;
-
-	constr_pd(&q, x, str);
-	while (str[q.i])
-	{
-		if (str[q.i] == '\'')
-			q.s_q = !q.s_q;
-		if (str[q.i] == '"')
-			q.d_q = !q.d_q;
-		if (str[q.i] == '$' && (!q.d_q && !q.s_q) && (str[q.i + 1] == '\''
-				|| str[q.i + 1] == '"'))
-			q.i++;
-		q.s[q.j] = str[q.i];
-		q.i++;
-		q.j++;
-	}
-	q.s[q.j] = '\0';
-	return (q.s);
 }
 
 char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env)

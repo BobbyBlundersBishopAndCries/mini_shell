@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/18 05:37:58 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:23:07 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,13 +323,17 @@ void					sigint_handler(int signo);
 void					restore_signals_to_default(void);
 void					disable_echoctl(void);
 void					enable_echoctl(void);
-// here doc expandering
+// here doc expanding
 void					heredoc_process(t_redir *redir, int pipe_fd[2],
 							t_env *env);
 int						heredoc_status(int status, t_redir *redir,
 							int read_end);
 int						handle_all_heredocs(t_cmd *cmd);
 int						handle_heredoc(t_redir *redir, t_env *env);
+char					*process_del(char *str, t_lst_hk *x);
+char					*get_word(const char *word, int size);
+char					*str_append(char *dst, const char *src);
+char					*expand_exit_status(char *result);
 // export utils
 char					*expand_line(const char *line, t_env *env);
 void					export_argument(t_env **env, char *arg);

@@ -48,10 +48,6 @@ typedef struct s_shell_state
 }						t_shell_state;
 extern t_shell_state	g_shell;
 
-
-
-
-
 /* ─────────────────────────────────────────────────────────── */
 /*                       MEMORY MANAGER (GC)                   */
 /* ─────────────────────────────────────────────────────────── */
@@ -122,7 +118,7 @@ typedef enum e_type
 	REDIR_OUT,
 	REDIR_APPEND,
 	HEREDOC
-} t_type;
+}						t_type;
 
 typedef struct s_token
 {
@@ -145,14 +141,14 @@ typedef struct s_help
 	int					i;
 }						t_help;
 
-t_lst_token *tokenizer(char *string, t_lst_hk *x);
-t_token *get_pipe(int *position, t_lst_hk *x);
-t_token *get_redir_in_here(char *string, int *position,
-													 t_lst_hk *x);
-t_token *get_redir_out_append(char *string, int *position,
-															t_lst_hk *x);
-t_token *get_random_wrd(char *string, int *position,
-												t_lst_hk *x);
+t_lst_token				*tokenizer(char *string, t_lst_hk *x);
+t_token					*get_pipe(int *position, t_lst_hk *x);
+t_token					*get_redir_in_here(char *string, int *position,
+							t_lst_hk *x);
+t_token					*get_redir_out_append(char *string, int *position,
+							t_lst_hk *x);
+t_token					*get_random_wrd(char *string, int *position,
+							t_lst_hk *x);
 
 /* ─────────────────────────────────────────────────────────── */
 /*                          EXPANDER                           */
@@ -160,41 +156,41 @@ t_token *get_random_wrd(char *string, int *position,
 
 typedef struct s_exstrct
 {
-	char *res;
-	int i;
-	bool in_s;
-	bool in_d;
-	char tmp[2];
-} t_exstrct;
+	char				*res;
+	int					i;
+	bool				in_s;
+	bool				in_d;
+	char				tmp[2];
+}						t_exstrct;
 typedef struct s_cih
 {
-	t_lst_token *tmp;
-	t_token *m;
-	t_token *curr;
-	t_token *prev;
-	char *t;
-	int size;
+	t_lst_token			*tmp;
+	t_token				*m;
+	t_token				*curr;
+	t_token				*prev;
+	char				*t;
+	int					size;
 
-} t_cih;
+}						t_cih;
 
 typedef struct s_pd
 {
-	char *s;
-	bool s_q;
-	bool d_q;
-	int i;
-	int j;
-} t_pd;
+	char				*s;
+	bool				s_q;
+	bool				d_q;
+	int					i;
+	int					j;
+}						t_pd;
 
-char *string_expander(char *str, t_lst_hk *x, t_type a,
-											t_env *env);
-void expander(t_lst_token *token, t_lst_hk *x, t_env *env);
-void handle_dollar(char *str, t_exstrct *q, t_lst_hk *x,
-									 t_env *env);
-char *ft_strdump(const char *s1, t_lst_hk *x);
-char *ft_join(const char *s1, const char *s2, t_lst_hk *x);
-char *change_value(char *key, size_t count, t_lst_hk *x,
-									 t_env *env);
+char					*string_expander(char *str, t_lst_hk *x, t_type a,
+							t_env *env);
+void					expander(t_lst_token *token, t_lst_hk *x, t_env *env);
+void					handle_dollar(char *str, t_exstrct *q, t_lst_hk *x,
+							t_env *env);
+char					*ft_strdump(const char *s1, t_lst_hk *x);
+char					*ft_join(const char *s1, const char *s2, t_lst_hk *x);
+char					*change_value(char *key, size_t count, t_lst_hk *x,
+							t_env *env);
 
 /* ─────────────────────────────────────────────────────────── */
 /*                        SYNTAX CHECKER                       */
@@ -202,145 +198,145 @@ char *change_value(char *key, size_t count, t_lst_hk *x,
 
 typedef struct s_helpq
 {
-	int s;
-	int d;
-	int i;
-	bool in_s;
-	bool in_d;
-} t_helpq;
+	int					s;
+	int					d;
+	int					i;
+	bool				in_s;
+	bool				in_d;
+}						t_helpq;
 
-int check_quote(char *string);
-int sequotes_handle(t_lst_token *token);
-int syntax_analyser(t_lst_token *token);
-int sepipe_o(t_lst_token *token);
-int seredir_handle(t_lst_token *token);
-int redir_error(char *token);
-int pipe_error(void);
-int newline_error(void);
-bool is_redir(t_token *a);
+int						check_quote(char *string);
+int						sequotes_handle(t_lst_token *token);
+int						syntax_analyser(t_lst_token *token);
+int						sepipe_o(t_lst_token *token);
+int						seredir_handle(t_lst_token *token);
+int						redir_error(char *token);
+int						pipe_error(void);
+int						newline_error(void);
+bool					is_redir(t_token *a);
 
 /* ─────────────────────────────────────────────────────────── */
 /*                    MEMORY / HELPER UTILS                    */
 /* ─────────────────────────────────────────────────────────── */
 
-int addadrs_back(void *addrs, t_lst_hk *list);
-void *ft_malloc(size_t size, t_lst_hk *k);
-void free_all(t_lst_hk *k);
-void append_string(char *dest, const char *src, size_t size);
-bool is_op(char c);
-void trim_space(char **input);
-void print_lst(t_lst_token *ltoken);
+int						addadrs_back(void *addrs, t_lst_hk *list);
+void					*ft_malloc(size_t size, t_lst_hk *k);
+void					free_all(t_lst_hk *k);
+void					append_string(char *dest, const char *src, size_t size);
+bool					is_op(char c);
+void					trim_space(char **input);
+void					print_lst(t_lst_token *ltoken);
 
 /* ─────────────────────────────────────────────────────────── */
 /*                          PARSING                            */
 /* ─────────────────────────────────────────────────────────── */
 
-t_lst_cmd *parsing(char *input, t_env *env, int *g_es);
-t_redir *add_in_file(t_token *redir, t_token *file,
-										 t_redir *head, t_lst_hk *x);
-size_t get_all_argscmd(t_token *token);
+t_lst_cmd				*parsing(char *input, t_env *env, int *g_es);
+t_redir					*add_in_file(t_token *redir, t_token *file,
+							t_redir *head, t_lst_hk *x);
+size_t					get_all_argscmd(t_token *token);
 typedef struct s_get_cmd_init
 {
-	t_token *token;
-	t_cmd *cmd;
-	size_t index;
+	t_token				*token;
+	t_cmd				*cmd;
+	size_t				index;
 	size_t				count;
 }						t_get_cmd_init;
 
-void init_get_cmd(t_get_cmd_init *init, t_token **t,
-									t_lst_hk *x, t_env *env);
-t_cmd *get_cmd(t_token **t, t_lst_hk *x, t_env *env);
+void					init_get_cmd(t_get_cmd_init *init, t_token **t,
+							t_lst_hk *x, t_env *env);
+t_cmd					*get_cmd(t_token **t, t_lst_hk *x, t_env *env);
 typedef struct s_init_fill
 {
-	t_lst_cmd *lst_cmds;
-	t_token *token;
-	t_cmd *cmd;
-	t_cmd *tail;
-} t_init_fill;
+	t_lst_cmd			*lst_cmds;
+	t_token				*token;
+	t_cmd				*cmd;
+	t_cmd				*tail;
+}						t_init_fill;
 
-void fill_struct_init(t_init_fill *init,
-											t_lst_token *lst_token, t_lst_hk *x);
-t_lst_cmd *fill_struct(t_lst_token *lst_token, t_lst_hk *x,
-											 t_env *env);
+void					fill_struct_init(t_init_fill *init,
+							t_lst_token *lst_token, t_lst_hk *x);
+t_lst_cmd				*fill_struct(t_lst_token *lst_token, t_lst_hk *x,
+							t_env *env);
 
 /* ─────────────────────────────────────────────────────────── */
 /*                          EXECUTION                          */
 /* ─────────────────────────────────────────────────────────── */
 
 /* utiles_simo */
-int addback_node(t_env **head, char *av);
-void free_env_list(t_env *head);
-t_env *get_env(char **env);
-void free_shellax(t_lst_cmd *head);
-void update_env_value(t_env *node, char *value);
+int						addback_node(t_env **head, char *av);
+void					free_env_list(t_env *head);
+t_env					*get_env(char **env);
+void					free_shellax(t_lst_cmd *head);
+void					update_env_value(t_env *node, char *value);
 /* cd_utils.c */
-char *get_value(t_env *env, char *key);
-void update_val(t_env *env, char *key, char *new_val);
-t_env *find_env_node(t_env *env, char *key);
-char *resolve_cd_target(t_cmd *cmd);
-char *cd_to_path(t_cmd *cmd, char *oldpwd);
-int arg_count(char **av);
-void swap_env_nodes(t_env *a, t_env *b);
-void sort_list(t_env *head);
+char					*get_value(t_env *env, char *key);
+void					update_val(t_env *env, char *key, char *new_val);
+t_env					*find_env_node(t_env *env, char *key);
+char					*resolve_cd_target(t_cmd *cmd);
+char					*cd_to_path(t_cmd *cmd, char *oldpwd);
+int						arg_count(char **av);
+void					swap_env_nodes(t_env *a, t_env *b);
+void					sort_list(t_env *head);
 /**/
-int is_valid_identifier(char *name);
-int is_builtin(char *cmd);
-void free_array(char **array);
-char *strjoin_val_path(char *s1, char *s2, int flag);
-char **env_tochar(t_env *env);
+int						is_valid_identifier(char *name);
+int						is_builtin(char *cmd);
+void					free_array(char **array);
+char					*strjoin_val_path(char *s1, char *s2, int flag);
+char					**env_tochar(t_env *env);
 
 /* builtins */
 typedef struct s_h
 {
-	char *eq;
-	char *key;
-	char *val;
-	t_env *existing;
+	char				*eq;
+	char				*key;
+	char				*val;
+	t_env				*existing;
 
-} t_h;
+}						t_h;
 
-int ft_cd(t_cmd *cmd);
-int ft_env(t_cmd *cmd);
-int ft_pwd(void);
-int ft_exit(t_cmd *cmd, t_lst_cmd *head);
-int ft_echo(t_cmd *cmd);
-int ft_export(t_cmd *cmd);
-int ft_unset(t_cmd *cmd);
+int						ft_cd(t_cmd *cmd);
+int						ft_env(t_cmd *cmd);
+int						ft_pwd(void);
+int						ft_exit(t_cmd *cmd, t_lst_cmd *head);
+int						ft_echo(t_cmd *cmd);
+int						ft_export(t_cmd *cmd);
+int						ft_unset(t_cmd *cmd);
 /* redtrections */
-int open_file(t_redir *redir, t_redirct mode);
-int redirect_fd(int fd, int std_fd);
-int setup_redirections(t_redir *list);
-void close_redirs(t_redir *list);
+int						open_file(t_redir *redir, t_redirct mode);
+int						redirect_fd(int fd, int std_fd);
+int						setup_redirections(t_redir *list);
+void					close_redirs(t_redir *list);
 /* execute command */
-void wait_for_children(void);
-int handle_builtin_cmd(t_cmd *cmd, t_lst_cmd *head);
-int exec_error_status(int err);
-int execute_builtin(t_cmd *cmd, t_lst_cmd *head);
-void error(void);
-void execute_command(t_cmd *cmd, t_lst_cmd *head);
-void fork_and_execute(t_cmd *cmd, int prev_fd[2],
-											t_lst_cmd *head, t_fork_info *info);
-void execute_pipeline(t_cmd *cmd, t_lst_cmd *head);
+void					wait_for_children(void);
+int						handle_builtin_cmd(t_cmd *cmd, t_lst_cmd *head);
+int						exec_error_status(int err);
+int						execute_builtin(t_cmd *cmd, t_lst_cmd *head);
+void					error(void);
+void					execute_command(t_cmd *cmd, t_lst_cmd *head);
+void					fork_and_execute(t_cmd *cmd, int prev_fd[2],
+							t_lst_cmd *head, t_fork_info *info);
+void					execute_pipeline(t_cmd *cmd, t_lst_cmd *head);
 /* signals */
-void handle_signals(void);
-void sigint_handler(int signo);
-void restore_signals_to_default(void);
-void disable_echoctl(void);
-void enable_echoctl(void);
+void					handle_signals(void);
+void					sigint_handler(int signo);
+void					restore_signals_to_default(void);
+void					disable_echoctl(void);
+void					enable_echoctl(void);
 // here doc expandering
-void heredoc_process(t_redir *redir, int pipe_fd[2],
-										 t_env *env);
-int heredoc_status(int status, t_redir *redir,
-									 int read_end);
-int handle_all_heredocs(t_cmd *cmd);
-int handle_heredoc(t_redir *redir, t_env *env);
+void					heredoc_process(t_redir *redir, int pipe_fd[2],
+							t_env *env);
+int						heredoc_status(int status, t_redir *redir,
+							int read_end);
+int						handle_all_heredocs(t_cmd *cmd);
+int						handle_heredoc(t_redir *redir, t_env *env);
 // export utils
-char *expand_line(const char *line, t_env *env);
-void export_argument(t_env **env, char *arg);
+char					*expand_line(const char *line, t_env *env);
+void					export_argument(t_env **env, char *arg);
 // main utiles.c
-int check_tabs_spaces(char *input);
-void setup_shell_state(void);
-void init_commands(t_lst_cmd *cmds, t_env *envir);
-void exit_shell(void);
-void free_shell(t_lst_cmd *head);
+int						check_tabs_spaces(char *input);
+void					setup_shell_state(void);
+void					init_commands(t_lst_cmd *cmds, t_env *envir);
+void					exit_shell(void);
+void					free_shell(t_lst_cmd *head);
 #endif

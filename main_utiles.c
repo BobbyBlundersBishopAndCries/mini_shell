@@ -58,19 +58,20 @@ void	exit_shell(void)
 	write(1, "exit\n", 5);
 	exit(g_shell.exit_status);
 }
-void free_shell(t_lst_cmd*head)
+void	free_shell(t_lst_cmd *head)
 {
-	t_cmd *tmp;
+	t_cmd		*tmp;
+	t_env		*env;
+	t_lst_hk	*x;
+
 	tmp = head->head;
-	t_env *env = *tmp->env;
-	t_lst_hk *x;
+	env = *tmp->env;
 	x = head->k;
-	while(tmp)
+	while (tmp)
 	{
 		free_array(tmp->envp);
 		tmp = tmp->next;
 	}
 	free_all(x);
-
 	free_env_list(env);
 }

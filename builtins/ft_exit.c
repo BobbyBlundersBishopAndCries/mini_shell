@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 03:35:36 by med               #+#    #+#             */
-/*   Updated: 2025/07/17 14:35:50 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/18 20:36:10 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ int	ft_exit(t_cmd *cmd, t_lst_cmd *head)
 		ft_printf(2, "exit\nminishell: exit: too many arguments\n");
 		return (1);
 	}
-	else
-		exit_status = g_shell.exit_status;
-	ft_printf(1, "exit\n");
+	if (!g_shell.child_running)
+		ft_printf(1, "exit\n");
 	free_shellax(head);
 	exit(exit_status);
 }

@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 13:02:14 by mohabid           #+#    #+#             */
-/*   Updated: 2025/07/17 18:39:46 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/18 17:55:18 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 #include "../minishell.h"
 
 static void	last_status(int status)

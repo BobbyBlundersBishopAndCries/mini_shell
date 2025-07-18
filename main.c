@@ -15,7 +15,7 @@
 t_shell_state	g_shell = {.exit_status = 0, .in_heredoc = 0,
 		.child_running = 0};
 
-void free_it(t_lst_cmd *cmd)
+void	free_it(t_lst_cmd *cmd)
 {
 	t_cmd *(c);
 	c = cmd->head;
@@ -27,28 +27,29 @@ void free_it(t_lst_cmd *cmd)
 	free_all(cmd->k);
 }
 
-static bool sh_loop_aid(t_env *envir ,char *input) 
+static bool	sh_loop_aid(t_env *envir, char *input)
 {
-	t_lst_cmd *cmds;
+	t_lst_cmd	*cmds;
+
 	if (*input)
-			add_history(input);
-		cmds = parsing(input, envir);
-		free(input);
-		if (!cmds || !cmds->head)
-		{
-			if (cmds)
-				free_all(cmds->k);
-			return true;
-		}
-		init_commands(cmds, envir);
-		close_redirs(cmds->head->files);
-		free_it(cmds);
-	return false;
+		add_history(input);
+	cmds = parsing(input, envir);
+	free(input);
+	if (!cmds || !cmds->head)
+	{
+		if (cmds)
+			free_all(cmds->k);
+		return (true);
+	}
+	init_commands(cmds, envir);
+	close_redirs(cmds->head->files);
+	free_it(cmds);
+	return (false);
 }
 
-void shell_loop(t_env *envir)
+void	shell_loop(t_env *envir)
 {
-	char		*(input);
+	char *(input);
 	while (1)
 	{
 		setup_shell_state();
@@ -63,8 +64,8 @@ void shell_loop(t_env *envir)
 			free(input);
 			continue ;
 		}
-		if(sh_loop_aid(envir , input))
-			continue;
+		if (sh_loop_aid(envir, input))
+			continue ;
 	}
 	free_env_list(envir);
 }

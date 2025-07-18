@@ -1,12 +1,9 @@
 CC     = cc
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
-LDFLAGS = -lreadline -lncurses
+CFLAGS = -Wall -Werror -Wextra
+LDFLAGS = -lreadline 
 
 LIBFT_DIR = libft
 LIBFT     = $(LIBFT_DIR)/libft.a
-
-D_TOK = lexical_analyser 
-D_SYN = syntax_error 
 
 SRCS = main.c \
 			main_utiles.c \

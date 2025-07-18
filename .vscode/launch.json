@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/mlakhdar/mini_shell",
-      "program": "/home/mlakhdar/mini_shell/build/Debug/outDebug",
+      "cwd": "/home/mlakhdar/Desktop/mini_shell",
+      "program": "/home/mlakhdar/Desktop/mini_shell/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

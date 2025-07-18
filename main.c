@@ -6,14 +6,14 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/18 05:54:50 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:31:27 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_shell_state	g_shell = {.exit_status = 0, .in_heredoc = 0,
-		.child_running = 0};
+	.child_running = 0};
 
 void	free_it(t_lst_cmd *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:58:35 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/18 05:27:35 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/18 05:54:50 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,40 @@
 t_shell_state	g_shell = {.exit_status = 0, .in_heredoc = 0,
 		.child_running = 0};
 
-void	shell_loop(t_env *envir)
+void free_it(t_lst_cmd *cmd)
 {
-	char		*input;
-	t_lst_cmd	*cmds;
-	t_cmd *tmp;
+	t_cmd *(c);
+	c = cmd->head;
+	while (c)
+	{
+		free_array(c->envp);
+		c = c->next;
+	}
+	free_all(cmd->k);
+}
 
+static bool sh_loop_aid(t_env *envir ,char *input) 
+{
+	t_lst_cmd *cmds;
+	if (*input)
+			add_history(input);
+		cmds = parsing(input, envir);
+		free(input);
+		if (!cmds || !cmds->head)
+		{
+			if (cmds)
+				free_all(cmds->k);
+			return true;
+		}
+		init_commands(cmds, envir);
+		close_redirs(cmds->head->files);
+		free_it(cmds);
+	return false;
+}
+
+void shell_loop(t_env *envir)
+{
+	char		*(input);
 	while (1)
 	{
 		setup_shell_state();
@@ -35,25 +63,8 @@ void	shell_loop(t_env *envir)
 			free(input);
 			continue ;
 		}
-		if (*input)
-			add_history(input);
-		cmds = parsing(input, envir, &g_shell.exit_status);
-		free(input);
-		if (!cmds || !cmds->head)
-		{
-			if (cmds)
-				free_all(cmds->k);
-			continue ;
-		}
-		init_commands(cmds, envir);
-		close_redirs(cmds->head->files);
-		tmp = cmds->head;
-		while (tmp)
-		{
-			free_array(tmp->envp);
-			tmp = tmp->next;
-		}
-		free_all(cmds->k);
+		if(sh_loop_aid(envir , input))
+			continue;
 	}
 	free_env_list(envir);
 }

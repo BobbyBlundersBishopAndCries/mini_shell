@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/18 05:27:17 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/18 05:37:58 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ void					print_lst(t_lst_token *ltoken);
 /*                          PARSING                            */
 /* ─────────────────────────────────────────────────────────── */
 
-t_lst_cmd				*parsing(char *input, t_env *env, int *g_es);
+t_lst_cmd				*parsing(char *input, t_env *env);
 t_redir					*add_in_file(t_token *redir, t_token *file,
 							t_redir *head, t_lst_hk *x);
 size_t					get_all_argscmd(t_token *token);

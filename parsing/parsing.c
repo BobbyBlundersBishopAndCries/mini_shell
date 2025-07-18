@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 18:46:15 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/15 20:22:02 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/18 05:38:32 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_lst_cmd	*parsing(char *input, t_env *env, int *g_es)
+t_lst_cmd	*parsing(char *input, t_env *env)
 {
 	t_lst_hk	*x;
 	t_lst_token	*lst_token;
@@ -26,7 +26,7 @@ t_lst_cmd	*parsing(char *input, t_env *env, int *g_es)
 	lst_token = tokenizer(input, x);
 	if ((!lst_token || !lst_token->head) || syntax_analyser(lst_token) == 2)
 	{
-		*g_es = 2;
+		g_shell.exit_status = 2;
 		free_all(x);
 		return (NULL);
 	}

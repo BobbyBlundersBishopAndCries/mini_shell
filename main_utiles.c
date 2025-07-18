@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 05:23:37 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/18 05:25:40 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/18 05:34:49 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	exit_shell(void)
 	write(1, "exit\n", 5);
 	exit(g_shell.exit_status);
 }
+
 void	free_shell(t_lst_cmd *head)
 {
 	t_cmd		*tmp;

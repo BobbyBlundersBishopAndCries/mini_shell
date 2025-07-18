@@ -9,6 +9,7 @@ D_TOK = lexical_analyser
 D_SYN = syntax_error 
 
 SRCS = main.c \
+			main_utiles.c \
 			exec/expand_heredoc.c \
 			utiles_lkhdr/track_alloc_free.c \
 			utiles_lkhdr/tools.c \

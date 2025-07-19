@@ -18,37 +18,36 @@ static void	free_argex(t_h q)
 	free(q.val);
 }
 
-static void	handle_new_export(t_env **env, char *arg)
-{
-	addback_node(env, arg);
-	sort_list(*env);
-}
-
-void	export_argument(t_env **env, char *arg)
+int	export_argument(t_env **env, char *arg)
 {
 	t_h	q;
 
 	if (!arg || !is_valid_identifier(arg))
 	{
 		ft_printf(2, "minishell: export: `%s`: not a valid identifier\n", arg);
-		return ;
+		return (1);
 	}
 	q.eq = ft_strchr(arg, '=');
 	if (!q.eq)
 	{
 		q.existing = find_env_node(*env, arg);
 		if (!q.existing)
-			handle_new_export(env, arg);
-		return ;
+			addback_node(env, arg);
+		return (0);
 	}
 	q.key = ft_substr(arg, 0, q.eq - arg);
 	q.val = ft_strdup(q.eq + 1);
 	if (!q.key || !q.val)
-		return ;
+	{
+    	free(q.key);
+    	free(q.val);
+   	 	return (1);
+	}
 	q.existing = find_env_node(*env, q.key);
 	if (q.existing)
 		update_env_value(q.existing, q.val);
 	else
-		handle_new_export(env, arg);
+		addback_node(env, arg);
 	free_argex(q);
+	return (0);
 }

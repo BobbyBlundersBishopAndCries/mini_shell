@@ -308,7 +308,6 @@ int						redirect_fd(int fd, int std_fd);
 int						setup_redirections(t_redir *list);
 void					close_redirs(t_redir *list);
 /* execute command */
-void					wait_for_children(void);
 int						handle_builtin_cmd(t_cmd *cmd, t_lst_cmd *head);
 int						exec_error_status(int err);
 int						execute_builtin(t_cmd *cmd, t_lst_cmd *head);
@@ -336,7 +335,7 @@ char					*str_append(char *dst, const char *src);
 char					*expand_exit_status(char *result);
 // export utils
 char					*expand_line(const char *line, t_env *env);
-void					export_argument(t_env **env, char *arg);
+int						export_argument(t_env **env, char *arg);
 // main utiles.c
 int						check_tabs_spaces(char *input);
 void					setup_shell_state(void);

@@ -28,17 +28,25 @@ static int	count_non_empty_args(char **args)
 	return (count);
 }
 
-static void	export_with_args(t_cmd *cmd)
+static int	export_with_args(t_cmd *cmd)
 {
 	int	i;
+	int	status;
+	int	ret;
 
 	i = 1;
+	ret = 0;
 	while (cmd->args[i])
 	{
 		if (cmd->args[i][0] != '\0')
-			export_argument(cmd->env, cmd->args[i]);
+		{
+			status = export_argument(cmd->env, cmd->args[i]);
+			if (status != 0)
+				ret = status; // keep failure status if any
+		}
 		i++;
 	}
+	return ret;
 }
 
 int	ft_export(t_cmd *cmd)
@@ -56,11 +64,13 @@ int	ft_export(t_cmd *cmd)
 			printf("declare -x %s", curr->key);
 			if (curr->value)
 				printf("=\"%s\"", curr->value);
+			else
+				printf("=\"\"");
 			printf("\n");
 			curr = curr->next;
 		}
 	}
 	else
-		export_with_args(cmd);
+		return (export_with_args(cmd));
 	return (0);
 }

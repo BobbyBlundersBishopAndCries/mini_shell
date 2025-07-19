@@ -63,21 +63,40 @@ static char	*path_found(t_env *env, char *cmd)
 
 static char	*resolve_exec_path(t_cmd *cmd)
 {
-	char	*p;
 	char	*tmp;
+	char	*full;
 
+	// Case 1: Absolute path
 	if (cmd->args[0][0] == '/')
 		return (ft_strdup(cmd->args[0]));
-	if (cmd->args[0][0] == '.')
+
+	// Case 2: Starts with ./ or ../
+	if (ft_strncmp(cmd->args[0], "./", 2) == 0 || ft_strncmp(cmd->args[0], "../", 3) == 0)
 	{
 		tmp = getcwd(NULL, 0);
-		p = strjoin_val_path(tmp, cmd->args[0], 1);
+		if (!tmp)
+			return (NULL);
+		full = strjoin_val_path(tmp, cmd->args[0], 1);
 		free(tmp);
-		return (p);
+		return (full);
 	}
+
+	// Case 3: Starts with ~
 	if (cmd->args[0][0] == '~')
-		return (strjoin_val_path(get_value(*(cmd->env), "HOME"), cmd->args[0]
-				+ 1, 1));
+	{
+		tmp = get_value(*(cmd->env), "HOME");
+		if (!tmp)
+			return (NULL);
+		full = strjoin_val_path(tmp, cmd->args[0] + 1, 1);
+		free(tmp);
+		return (full);
+	}
+
+	// Case 4: It's a directory (even without /)
+	if (is_directory(cmd->args[0]) && cmd->args[0][ft_strlen(cmd->args[0]) - 1] == '/')
+		return (ft_strdup(cmd->args[0]));
+
+	// Case 5: Search in PATH
 	return (path_found(*(cmd->env), cmd->args[0]));
 }
 
@@ -87,12 +106,6 @@ void	execute_command(t_cmd *cmd, t_lst_cmd *head)
 
 	if (!cmd || !cmd->args || !cmd->args[0] || !cmd->args[0][0])
 		return ;
-	if (is_directory(cmd->args[0]))
-	{
-		ft_printf(2, "minishell: %s: Is a directory\n", cmd->args[0]);
-		free_shellax(head);
-		exit(126);
-	}
 	p = resolve_exec_path(cmd);
 	if (!p)
 	{
@@ -100,7 +113,13 @@ void	execute_command(t_cmd *cmd, t_lst_cmd *head)
 		free_shellax(head);
 		exit(127);
 	}
-	execve(p, cmd->args, cmd->envp);
+	if (is_directory(cmd->args[0]))
+	{
+		ft_printf(2, "minishell: %s: Is a directory\n", cmd->args[0]);
+		free_shellax(head);
+		exit(126);
+	}
+		execve(p, cmd->args, cmd->envp);
 	ft_printf(2, "minishell: %s: %s\n", cmd->args[0], strerror(errno));
 	free_shellax(head);
 	free(p);

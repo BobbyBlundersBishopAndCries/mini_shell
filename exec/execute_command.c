@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:36:11 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 18:44:50 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:17:57 by med              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	execute_command(t_cmd *cmd, t_lst_cmd *head)
 	if (!cmd || !cmd->args)
 		return ;
 	p = resolve_exec_path(cmd);
-	if (!p)
+	if (!p || ft_strcmp(cmd->args[0],"") == 0)
 	{
 		ft_printf(2, "minishell: %s: command not found\n", cmd->args[0]);
 		free_shellax(head);

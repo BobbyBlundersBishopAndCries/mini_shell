@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 18:49:34 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/17 19:42:11 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/20 01:33:06 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 	if (var_len > 0)
 	{
 		val = change_value(str + q->i, var_len, x, env);
-		q->res = ft_join(q->res, val, x);
+		if (val[0] != '\0')
+			q->res = ft_join(q->res, val, x);
 		q->i += var_len;
 	}
 	else if (str[q->i] && !q->in_d)
@@ -78,7 +79,10 @@ void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 			val = ft_ittoa(g_shell.exit_status, x);
 		else
 			val = change_value(str + q->i, 1, x, env);
-		q->res = ft_join(q->res, val, x);
+		if(val[0] != '\0')
+		{
+			q->res = ft_join(q->res, val, x);
+		}
 		if (str[q->i] != '\'' || str[q->i] != '"')
 			q->i++;
 	}

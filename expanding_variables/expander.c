@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:44:21 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 17:57:21 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:41:21 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	constr(t_exstrct *q, t_lst_hk *x)
 	q->res = ft_strdump("", x);
 }
 
-char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env)
+char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env , bool *ok )
 {
 	t_exstrct (q);
 	constr(&q, x);
@@ -36,7 +36,9 @@ char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env)
 		{
 			q.i++;
 			handle_dollar(str, &q, x, env);
-			continue ;
+			if (q.res[0] == '\0')
+				*ok = true;
+			continue;
 		}
 		else
 		{
@@ -106,14 +108,10 @@ void	expander(t_lst_token *token, t_lst_hk *x, t_env *env)
 	{
 		raw = curr->token;
 		if (prev == NULL)
-		{
-			curr->token = string_expander(raw, x, 0, env);
-			curr->expanded = true;
-		}
+			curr->token = string_expander(raw, x, 0, env, &curr->expanded);
 		else
 		{
-			curr->token = string_expander(raw, x, prev->type, env);
-			curr->expanded = true;
+			curr->token = string_expander(raw, x, prev->type, env,&curr->expanded);
 		}
 		prev = curr;
 		curr = curr->next;

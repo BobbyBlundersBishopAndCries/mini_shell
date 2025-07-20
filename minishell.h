@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 17:59:22 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:35:12 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ typedef struct s_pd
 }						t_pd;
 
 char					*string_expander(char *str, t_lst_hk *x, t_type a,
-							t_env *env);
+							t_env *env , bool *ok);
 void					expander(t_lst_token *token, t_lst_hk *x, t_env *env);
 void					handle_dollar(char *str, t_exstrct *q, t_lst_hk *x,
 							t_env *env);

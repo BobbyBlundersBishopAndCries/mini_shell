@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 19:54:21 by med               #+#    #+#             */
-/*   Updated: 2025/07/17 16:13:14 by feedback         ###   ########.fr       */
+/*   Created: 2025/07/20 13:43:20 by mlakhdar          #+#    #+#             */
+/*   Updated: 2025/07/20 18:20:48 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ static int	export_with_args(t_cmd *cmd)
 		{
 			status = export_argument(cmd->env, cmd->args[i]);
 			if (status != 0)
-				ret = status; // keep failure status if any
+				ret = status;
 		}
 		i++;
 	}
-	return ret;
+	return (ret);
 }
 
 int	ft_export(t_cmd *cmd)

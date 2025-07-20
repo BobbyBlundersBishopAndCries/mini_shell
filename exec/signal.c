@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 18:52:39 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/17 18:41:05 by mohabid          ###   ########.fr       */
+/*   Created: 2025/07/20 13:39:11 by mlakhdar          #+#    #+#             */
+/*   Updated: 2025/07/20 14:46:55 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	sigint_handler(int signo)
 	}
 	else if (!g_shell.child_running)
 	{
+		rl_replace_line("", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }

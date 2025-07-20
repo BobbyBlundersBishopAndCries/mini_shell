@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filling_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 18:42:41 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/09 18:42:50 by feedback         ###   ########.fr       */
+/*   Created: 2025/07/20 13:46:08 by mlakhdar          #+#    #+#             */
+/*   Updated: 2025/07/20 18:02:27 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ t_cmd	*get_cmd(t_token **t, t_lst_hk *x, t_env *env)
 					init->cmd->files, x);
 			init->token = init->token->next;
 		}
-		else if (init->token->type == WORD)
-		{
+		else if (init->token->type == WORD && (init->token->token[0] != '\0' && init->token->expanded))		
 			init->cmd->args[init->index++] = ft_strdump(init->token->token, x);
-		}
 		init->token = init->token->next;
 	}
 	init->cmd->args[init->index] = NULL;

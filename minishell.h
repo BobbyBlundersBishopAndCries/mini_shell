@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/18 15:23:07 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/20 17:59:22 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ typedef struct s_token
 	char				*token;
 	t_type				type;
 	bool				deja_quoted;
-	struct s_token		*next;
+	bool expanded;
+	struct s_token *next;
 }						t_token;
 
 typedef struct s_lst_token
@@ -191,6 +192,7 @@ char					*ft_strdump(const char *s1, t_lst_hk *x);
 char					*ft_join(const char *s1, const char *s2, t_lst_hk *x);
 char					*change_value(char *key, size_t count, t_lst_hk *x,
 							t_env *env);
+void bool_set(t_lst_token *token);
 
 /* ─────────────────────────────────────────────────────────── */
 /*                        SYNTAX CHECKER                       */

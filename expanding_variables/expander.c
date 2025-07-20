@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 14:07:48 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/18 15:15:52 by mlakhdar         ###   ########.fr       */
+/*   Created: 2025/07/20 13:44:21 by mlakhdar          #+#    #+#             */
+/*   Updated: 2025/07/20 17:57:21 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,21 @@ void	expander(t_lst_token *token, t_lst_hk *x, t_env *env)
 	curr = token->head;
 	prev = NULL;
 	raw = NULL;
+	bool_set(token);
 	check_if_heredocquoted(token);
 	while (curr)
 	{
 		raw = curr->token;
 		if (prev == NULL)
+		{
 			curr->token = string_expander(raw, x, 0, env);
+			curr->expanded = true;
+		}
 		else
+		{
 			curr->token = string_expander(raw, x, prev->type, env);
+			curr->expanded = true;
+		}
 		prev = curr;
 		curr = curr->next;
 	}

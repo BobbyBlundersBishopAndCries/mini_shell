@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 18:52:29 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/17 14:48:05 by feedback         ###   ########.fr       */
+/*   Created: 2025/07/20 13:36:11 by mlakhdar          #+#    #+#             */
+/*   Updated: 2025/07/20 14:55:53 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,9 @@ static char	*path_found(t_env *env, char *cmd)
 
 static char	*resolve_exec_path(t_cmd *cmd)
 {
-	char	*tmp;
-	char	*full;
-
-	// Case 1: Absolute path
+	char *(tmp), *(full);
 	if (cmd->args[0][0] == '/')
 		return (ft_strdup(cmd->args[0]));
-
-	// Case 2: Starts with ./ or ../
 	if (ft_strncmp(cmd->args[0], "./", 2) == 0 || ft_strncmp(cmd->args[0], "../", 3) == 0)
 	{
 		tmp = getcwd(NULL, 0);
@@ -80,8 +75,6 @@ static char	*resolve_exec_path(t_cmd *cmd)
 		free(tmp);
 		return (full);
 	}
-
-	// Case 3: Starts with ~
 	if (cmd->args[0][0] == '~')
 	{
 		tmp = get_value(*(cmd->env), "HOME");
@@ -91,12 +84,8 @@ static char	*resolve_exec_path(t_cmd *cmd)
 		free(tmp);
 		return (full);
 	}
-
-	// Case 4: It's a directory (even without /)
 	if (is_directory(cmd->args[0]) && cmd->args[0][ft_strlen(cmd->args[0]) - 1] == '/')
 		return (ft_strdup(cmd->args[0]));
-
-	// Case 5: Search in PATH
 	return (path_found(*(cmd->env), cmd->args[0]));
 }
 

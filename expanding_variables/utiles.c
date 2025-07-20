@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 18:49:34 by feedback          #+#    #+#             */
-/*   Updated: 2025/07/20 01:33:06 by mlakhdar         ###   ########.fr       */
+/*   Created: 2025/07/20 13:45:32 by mlakhdar          #+#    #+#             */
+/*   Updated: 2025/07/20 17:55:57 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,18 @@ char	*ft_ittoa(int n, t_lst_hk *x)
 	return (string);
 }
 
+void bool_set(t_lst_token *token)
+{
+	t_token *t;
+
+	t = token->head;
+	while(t)
+	{
+		t->expanded = false;
+		t = t->next;
+	}
+}
+
 void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 {
 	char *(val);
@@ -69,8 +81,7 @@ void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 	if (var_len > 0)
 	{
 		val = change_value(str + q->i, var_len, x, env);
-		if (val[0] != '\0')
-			q->res = ft_join(q->res, val, x);
+		q->res = ft_join(q->res, val, x);
 		q->i += var_len;
 	}
 	else if (str[q->i] && !q->in_d)
@@ -79,10 +90,7 @@ void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 			val = ft_ittoa(g_shell.exit_status, x);
 		else
 			val = change_value(str + q->i, 1, x, env);
-		if(val[0] != '\0')
-		{
-			q->res = ft_join(q->res, val, x);
-		}
+		q->res = ft_join(q->res, val, x);
 		if (str[q->i] != '\'' || str[q->i] != '"')
 			q->i++;
 	}

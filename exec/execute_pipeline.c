@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:42:18 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 13:42:20 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:39:56 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	execute_pipeline(t_cmd *cmd, t_lst_cmd *head)
 		tmp = tmp->next;
 	}
 	handle_signals();
-	if(cmd->args[0][0] != '\0')
-		wait_for_pipeline(info.pids, count);
+	wait_for_pipeline(info.pids, count);
 	g_shell.child_running = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:36:11 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 14:55:53 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:44:50 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	execute_command(t_cmd *cmd, t_lst_cmd *head)
 {
 	char	*p;
 
-	if (!cmd || !cmd->args || !cmd->args[0] || !cmd->args[0][0])
+	if (!cmd || !cmd->args)
 		return ;
 	p = resolve_exec_path(cmd);
 	if (!p)

@@ -66,7 +66,8 @@ static char	*resolve_exec_path(t_cmd *cmd)
 	char *(tmp), *(full);
 	if (cmd->args[0][0] == '/')
 		return (ft_strdup(cmd->args[0]));
-	if (ft_strncmp(cmd->args[0], "./", 2) == 0 || ft_strncmp(cmd->args[0], "../", 3) == 0)
+	if (ft_strncmp(cmd->args[0], "./", 2) == 0 || ft_strncmp(cmd->args[0],
+			"../", 3) == 0)
 	{
 		tmp = getcwd(NULL, 0);
 		if (!tmp)
@@ -84,7 +85,8 @@ static char	*resolve_exec_path(t_cmd *cmd)
 		free(tmp);
 		return (full);
 	}
-	if (is_directory(cmd->args[0]) && cmd->args[0][ft_strlen(cmd->args[0]) - 1] == '/')
+	if (is_directory(cmd->args[0]) && cmd->args[0][ft_strlen(cmd->args[0])
+		- 1] == '/')
 		return (ft_strdup(cmd->args[0]));
 	return (path_found(*(cmd->env), cmd->args[0]));
 }
@@ -96,7 +98,7 @@ void	execute_command(t_cmd *cmd, t_lst_cmd *head)
 	if (!cmd || !cmd->args)
 		return ;
 	p = resolve_exec_path(cmd);
-	if (!p || ft_strcmp(cmd->args[0],"") == 0)
+	if (!p || ft_strcmp(cmd->args[0], "") == 0)
 	{
 		ft_printf(2, "minishell: %s: command not found\n", cmd->args[0]);
 		free_shellax(head);
@@ -108,7 +110,7 @@ void	execute_command(t_cmd *cmd, t_lst_cmd *head)
 		free_shellax(head);
 		exit(126);
 	}
-		execve(p, cmd->args, cmd->envp);
+	execve(p, cmd->args, cmd->envp);
 	ft_printf(2, "minishell: %s: %s\n", cmd->args[0], strerror(errno));
 	free_shellax(head);
 	free(p);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:45:32 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 17:55:57 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:23:24 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ char	*ft_ittoa(int n, t_lst_hk *x)
 	return (string);
 }
 
-void bool_set(t_lst_token *token)
+void	bool_set(t_lst_token *token)
 {
-	t_token *t;
+	t_token	*t;
 
 	t = token->head;
-	while(t)
+	while (t)
 	{
 		t->expanded = false;
 		t = t->next;
@@ -72,11 +72,10 @@ void bool_set(t_lst_token *token)
 void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 {
 	char *(val);
-	size_t (var_len);
+	size_t(var_len);
 	var_len = 0;
-	while (str[q->i + var_len]
-		&& (ft_isalnum(str[q->i + var_len])
-			|| str[q->i + var_len] == '_'))
+	while (str[q->i + var_len] && (ft_isalnum(str[q->i + var_len]) || str[q->i
+			+ var_len] == '_'))
 		var_len++;
 	if (var_len > 0)
 	{

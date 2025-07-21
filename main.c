@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:50:21 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 13:50:22 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:18:57 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,3 @@ int	main(int argc, char **argv, char **envp)
 	shell_loop(envir);
 	return (g_shell.exit_status);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 23:35:12 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:11:19 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ typedef struct s_token
 	char				*token;
 	t_type				type;
 	bool				deja_quoted;
-	bool expanded;
-	struct s_token *next;
+	bool				expanded;
+	struct s_token		*next;
 }						t_token;
 
 typedef struct s_lst_token
@@ -154,6 +154,13 @@ t_token					*get_random_wrd(char *string, int *position,
 /* ─────────────────────────────────────────────────────────── */
 /*                          EXPANDER                           */
 /* ─────────────────────────────────────────────────────────── */
+
+typedef struct s_ee
+{
+	t_lst_hk			*x;
+	t_env				*env;
+	char				*str;
+}						t_ee;
 
 typedef struct s_exstrct
 {
@@ -183,8 +190,7 @@ typedef struct s_pd
 	int					j;
 }						t_pd;
 
-char					*string_expander(char *str, t_lst_hk *x, t_type a,
-							t_env *env , bool *ok);
+char					*string_expander(t_ee *e, t_type a, bool *ok);
 void					expander(t_lst_token *token, t_lst_hk *x, t_env *env);
 void					handle_dollar(char *str, t_exstrct *q, t_lst_hk *x,
 							t_env *env);
@@ -192,7 +198,7 @@ char					*ft_strdump(const char *s1, t_lst_hk *x);
 char					*ft_join(const char *s1, const char *s2, t_lst_hk *x);
 char					*change_value(char *key, size_t count, t_lst_hk *x,
 							t_env *env);
-void bool_set(t_lst_token *token);
+void					bool_set(t_lst_token *token);
 
 /* ─────────────────────────────────────────────────────────── */
 /*                        SYNTAX CHECKER                       */

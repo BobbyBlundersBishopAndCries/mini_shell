@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   export_snd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:49:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 13:49:28 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:22:46 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	free_argex(t_h q)
+static int	free_argex(t_h q)
 {
 	free(q.key);
 	free(q.val);
+	return (1);
 }
 
 int	export_argument(t_env **env, char *arg)
 {
-	t_h	q;
-
+	t_h	(q);
 	if (!arg || !is_valid_identifier(arg))
 	{
 		ft_printf(2, "minishell: export: `%s`: not a valid identifier\n", arg);
@@ -38,11 +38,7 @@ int	export_argument(t_env **env, char *arg)
 	q.key = ft_substr(arg, 0, q.eq - arg);
 	q.val = ft_strdup(q.eq + 1);
 	if (!q.key || !q.val)
-	{
-    	free(q.key);
-    	free(q.val);
-   	 	return (1);
-	}
+		return (free_argex(q));
 	q.existing = find_env_node(*env, q.key);
 	if (q.existing)
 		update_env_value(q.existing, q.val);

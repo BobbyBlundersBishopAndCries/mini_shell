@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:44:21 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 23:41:21 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:17:06 by feedback         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,31 @@ static void	constr(t_exstrct *q, t_lst_hk *x)
 	q->res = ft_strdump("", x);
 }
 
-char	*string_expander(char *str, t_lst_hk *x, t_type a, t_env *env , bool *ok )
+char	*string_expander(t_ee *ee, t_type a, bool *ok)
 {
-	t_exstrct (q);
-	constr(&q, x);
+	t_exstrct(q);
+	constr(&q, ee->x);
 	if (a == HEREDOC)
-		str = process_del(str, x);
-	while (str[q.i])
+		ee->str = process_del(ee->str, ee->x);
+	while (ee->str[q.i])
 	{
-		if (str[q.i] == '\'' && !q.in_d)
+		if (ee->str[q.i] == '\'' && !q.in_d)
 			q.in_s = !q.in_s;
-		else if (str[q.i] == '"' && !q.in_s)
+		else if (ee->str[q.i] == '"' && !q.in_s)
 			q.in_d = !q.in_d;
-		else if (str[q.i] == '$' && !q.in_s && a != HEREDOC)
+		else if (ee->str[q.i] == '$' && !q.in_s && a != HEREDOC)
 		{
 			q.i++;
-			handle_dollar(str, &q, x, env);
+			handle_dollar(ee->str, &q, ee->x, ee->env);
 			if (q.res[0] == '\0')
 				*ok = true;
-			continue;
+			continue ;
 		}
 		else
 		{
-			q.tmp[0] = str[q.i];
+			q.tmp[0] = ee->str[q.i];
 			q.tmp[1] = '\0';
-			q.res = ft_join(q.res, ft_strdump(q.tmp, x), x);
+			q.res = ft_join(q.res, ft_strdump(q.tmp, ee->x), ee->x);
 		}
 		q.i++;
 	}
@@ -95,23 +95,24 @@ void	check_if_heredocquoted(t_lst_token *token)
 
 void	expander(t_lst_token *token, t_lst_hk *x, t_env *env)
 {
-	t_token	*curr;
-	t_token	*prev;
-	char	*raw;
+	t_ee	ee;
 
+	t_token *(curr), *(prev);
 	curr = token->head;
 	prev = NULL;
-	raw = NULL;
+	ee.x = x;
+	ee.env = env;
+	ee.str = NULL;
 	bool_set(token);
 	check_if_heredocquoted(token);
 	while (curr)
 	{
-		raw = curr->token;
+		ee.str = curr->token;
 		if (prev == NULL)
-			curr->token = string_expander(raw, x, 0, env, &curr->expanded);
+			curr->token = string_expander(&ee, 0, &curr->expanded);
 		else
 		{
-			curr->token = string_expander(raw, x, prev->type, env,&curr->expanded);
+			curr->token = string_expander(&ee, prev->type, &curr->expanded);
 		}
 		prev = curr;
 		curr = curr->next;

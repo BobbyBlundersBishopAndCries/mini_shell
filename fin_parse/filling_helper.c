@@ -39,11 +39,12 @@ t_cmd	*get_cmd(t_token **t, t_lst_hk *x, t_env *env)
 					init->cmd->files, x);
 			init->token = init->token->next;
 		}
-		else if (init->token->type == WORD )
+		else if (init->token->type == WORD)
 		{
-			if(!init->token->expanded)
-				init->cmd->args[init->index++] = ft_strdump(init->token->token, x);
-		}		
+			if (!init->token->expanded)
+				init->cmd->args[init->index++] = ft_strdump(init->token->token,
+						x);
+		}
 		init->token = init->token->next;
 	}
 	init->cmd->args[init->index] = NULL;

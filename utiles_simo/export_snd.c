@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_snd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:49:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/21 16:22:46 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:09:33 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	free_argex(t_h q)
 
 int	export_argument(t_env **env, char *arg)
 {
-	t_h	(q);
+	t_h (q);
 	if (!arg || !is_valid_identifier(arg))
 	{
 		ft_printf(2, "minishell: export: `%s`: not a valid identifier\n", arg);

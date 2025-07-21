@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/21 16:11:19 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:10:28 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,6 +316,8 @@ int						redirect_fd(int fd, int std_fd);
 int						setup_redirections(t_redir *list);
 void					close_redirs(t_redir *list);
 /* execute command */
+char					**return_path(t_env *env);
+int						is_directory(const char *path);
 int						handle_builtin_cmd(t_cmd *cmd, t_lst_cmd *head);
 int						exec_error_status(int err);
 int						execute_builtin(t_cmd *cmd, t_lst_cmd *head);

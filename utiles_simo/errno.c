@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errno.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlakhdar <mlakhdar@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:49:14 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 13:49:15 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:08:49 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ int	handle_builtin_cmd(t_cmd *cmd, t_lst_cmd *head)
 	return (1);
 }
 
+int	is_directory(const char *path)
+{
+	struct stat	st;
+
+	if (stat(path, &st) == -1)
+		return (0);
+	return (S_ISDIR(st.st_mode));
+}
+
 int	exec_error_status(int err)
 {
 	if (err == EACCES || err == ENOEXEC || err == ETXTBSY)
@@ -53,4 +62,19 @@ int	exec_error_status(int err)
 	if (err == ENOENT || err == ENOTDIR)
 		return (127);
 	return (1);
+}
+
+char	**return_path(t_env *env)
+{
+	char	*path_value;
+	char	**path;
+
+	path_value = get_value(env, "PATH");
+	if (!path_value)
+		return (NULL);
+	path = ft_split(path_value, ':');
+	free(path_value);
+	if (!path)
+		return (NULL);
+	return (path);
 }

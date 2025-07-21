@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: med <med@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:36:11 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 23:17:57 by med              ###   ########.fr       */
+/*   Updated: 2025/07/21 18:08:34 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	is_directory(const char *path)
-{
-	struct stat	st;
-
-	if (stat(path, &st) == -1)
-		return (0);
-	return (S_ISDIR(st.st_mode));
-}
-
-static char	**return_path(t_env *env)
-{
-	char	*path_value;
-	char	**path;
-
-	path_value = get_value(env, "PATH");
-	if (!path_value)
-		return (NULL);
-	path = ft_split(path_value, ':');
-	free(path_value);
-	if (!path)
-		return (NULL);
-	return (path);
-}
 
 static char	*path_found(t_env *env, char *cmd)
 {
@@ -61,32 +37,43 @@ static char	*path_found(t_env *env, char *cmd)
 	return (NULL);
 }
 
+static char	*resolve_home_path(t_cmd *cmd)
+{
+	char	*tmp;
+	char	*full;
+
+	tmp = get_value(*(cmd->env), "HOME");
+	if (!tmp)
+		return (NULL);
+	full = strjoin_val_path(tmp, cmd->args[0] + 1, 1);
+	free(tmp);
+	return (full);
+}
+
+static char	*resolve_relative_path(t_cmd *cmd)
+{
+	char	*tmp;
+	char	*full;
+
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
+		return (NULL);
+	full = strjoin_val_path(tmp, cmd->args[0], 1);
+	free(tmp);
+	return (full);
+}
+
 static char	*resolve_exec_path(t_cmd *cmd)
 {
-	char *(tmp), *(full);
 	if (cmd->args[0][0] == '/')
 		return (ft_strdup(cmd->args[0]));
-	if (ft_strncmp(cmd->args[0], "./", 2) == 0 || ft_strncmp(cmd->args[0],
-			"../", 3) == 0)
-	{
-		tmp = getcwd(NULL, 0);
-		if (!tmp)
-			return (NULL);
-		full = strjoin_val_path(tmp, cmd->args[0], 1);
-		free(tmp);
-		return (full);
-	}
+	if (ft_strncmp(cmd->args[0], "./", 2) == 0
+		|| ft_strncmp(cmd->args[0], "../", 3) == 0)
+		return (resolve_relative_path(cmd));
 	if (cmd->args[0][0] == '~')
-	{
-		tmp = get_value(*(cmd->env), "HOME");
-		if (!tmp)
-			return (NULL);
-		full = strjoin_val_path(tmp, cmd->args[0] + 1, 1);
-		free(tmp);
-		return (full);
-	}
-	if (is_directory(cmd->args[0]) && cmd->args[0][ft_strlen(cmd->args[0])
-		- 1] == '/')
+		return (resolve_home_path(cmd));
+	if (is_directory(cmd->args[0])
+		&& cmd->args[0][ft_strlen(cmd->args[0]) - 1] == '/')
 		return (ft_strdup(cmd->args[0]));
 	return (path_found(*(cmd->env), cmd->args[0]));
 }

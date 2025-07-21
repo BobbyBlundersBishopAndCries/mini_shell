@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:45:32 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/21 12:23:24 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:14:17 by mohabid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	handle_dollar(char *str, t_exstrct *q, t_lst_hk *x, t_env *env)
 	size_t(var_len);
 	var_len = 0;
 	while (str[q->i + var_len] && (ft_isalnum(str[q->i + var_len]) || str[q->i
-			+ var_len] == '_'))
+				+ var_len] == '_'))
 		var_len++;
 	if (var_len > 0)
 	{

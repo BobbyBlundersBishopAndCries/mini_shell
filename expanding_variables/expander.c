@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: feedback <feedback@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:44:21 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/21 16:17:06 by feedback         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:38:16 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,11 @@ char	*string_expander(t_ee *ee, t_type a, bool *ok)
 		ee->str = process_del(ee->str, ee->x);
 	while (ee->str[q.i])
 	{
-		if (ee->str[q.i] == '\'' && !q.in_d)
-			q.in_s = !q.in_s;
-		else if (ee->str[q.i] == '"' && !q.in_s)
-			q.in_d = !q.in_d;
-		else if (ee->str[q.i] == '$' && !q.in_s && a != HEREDOC)
+		handle_q(ee, &q);
+		if (ee->str[q.i] == '$' && !q.in_s && a != HEREDOC)
 		{
 			q.i++;
 			handle_dollar(ee->str, &q, ee->x, ee->env);
-			if (q.res[0] == '\0')
-				*ok = true;
 			continue ;
 		}
 		else
@@ -48,6 +43,8 @@ char	*string_expander(t_ee *ee, t_type a, bool *ok)
 		}
 		q.i++;
 	}
+	if (q.res[0] == '\0')
+		*ok = true;
 	return (q.res);
 }
 

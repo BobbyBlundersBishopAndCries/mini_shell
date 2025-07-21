@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohabid <mohabid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlakhdar <mlakhdar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:38:27 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/21 18:10:28 by mohabid          ###   ########.fr       */
+/*   Updated: 2025/07/21 18:40:33 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ typedef struct s_pd
 	int					j;
 }						t_pd;
 
+void					handle_q(t_ee *ee, t_exstrct *q);
 char					*string_expander(t_ee *e, t_type a, bool *ok);
 void					expander(t_lst_token *token, t_lst_hk *x, t_env *env);
 void					handle_dollar(char *str, t_exstrct *q, t_lst_hk *x,

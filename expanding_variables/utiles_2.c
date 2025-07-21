@@ -6,7 +6,7 @@
 /*   By: mlakhdar <mlakhdar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:45:42 by mlakhdar          #+#    #+#             */
-/*   Updated: 2025/07/20 13:45:44 by mlakhdar         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:38:19 by mlakhdar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ void	constr_pd(t_pd *p, t_lst_hk *x, char *str)
 	p->s_q = false;
 	p->d_q = false;
 	p->j = 0;
+}
+
+void	handle_q(t_ee *ee, t_exstrct *q)
+{
+	if (ee->str[q->i] == '\'' && !q->in_d)
+		q->in_s = !q->in_s;
+	else if (ee->str[q->i] == '"' && !q->in_s)
+		q->in_d = !q->in_d;
 }
 
 char	*process_del(char *str, t_lst_hk *x)
